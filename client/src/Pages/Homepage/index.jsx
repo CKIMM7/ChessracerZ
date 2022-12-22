@@ -21,7 +21,11 @@ function Homepage() {
     socket.on('connect', function() {
         console.log(`${socket.id} connected`)
     });
-    
+
+    socket.on('recieve', function(d) {
+        console.log(d)
+    });
+
     }, [socket])
 
 

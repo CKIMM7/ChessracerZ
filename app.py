@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 from flask_sqlalchemy import SQLAlchemy 
 from flask_marshmallow import Marshmallow
-from flask_socketio import SocketIO, emit 
+from flask_socketio import SocketIO, join_room, leave_room, emit, send
 
 from werkzeug import exceptions
 from subprocess import Popen
@@ -67,15 +67,15 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 @socketio.on("connect")
-def on_connect():
+def on_connect(): 
   print("Client connected")
 
 @socketio.on('message')
 def handle_message(data):
     print(data)
 
-
-
+    socketio.emit('recieve', 'yo')
+    #send("recieve", broadcast=True)
 
 
 @app.route('/user', methods=['POST'])
