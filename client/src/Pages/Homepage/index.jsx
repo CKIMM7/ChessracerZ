@@ -20,6 +20,11 @@ function Homepage() {
         socket.emit("message", { name: "John" });
     }
 
+    function createLobby(e) {
+        e.preventDefault()
+        socket.emit("create-lobby", lobbyId)
+    }
+
     function joinLobby(e) {
         e.preventDefault()
         socket.emit("join-lobby", lobbyId)
@@ -47,10 +52,9 @@ function Homepage() {
                 <h1>ChessRacerZ</h1>
                 <button onClick={sendToGame}>Start Game</button>
                 <button onClick={sendMsg}>send message</button>
-                <form onSubmit={joinLobby}>
-                    <input type="text" placeholder="Enter LobbyId" onChange={updateLobbyId} value={lobbyId} required/>
-                    <input type="submit"/>
-                </form>
+                <input type="text" placeholder="Enter LobbyId" onChange={updateLobbyId} value={lobbyId} required/>
+                <button onClick={createLobby}>Create Lobby</button>
+                <button onClick={joinLobby}>Join Lobby</button>
                 
             </main>
         </>
