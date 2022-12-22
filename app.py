@@ -87,7 +87,7 @@ def create_lobby(lobbyId):
 @socketio.on('join-lobby')
 def join_lobby(lobbyId):
     join_room(lobbyId)
-    socketio.emit("console-message", f"Joined {lobbyId} succesfully", room=lobbyId)
+    socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
 
 @app.route('/user', methods=['POST'])
 def add_User():
