@@ -70,9 +70,14 @@ users_schema = UserSchema(many=True)
 def on_connect():
   print("Client connected")
 
+@socketio.on("disconnect")
+def on_disconnect():
+  print("Client disconnected")
+
 @socketio.on('message')
 def handle_message(data):
     print(data)
+    socketio.emit("console-message", "yo")
 
 
 
