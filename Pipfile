@@ -12,6 +12,7 @@ waitress = "*"
 flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 python-dotenv = "*"
+flask-socketio = "*"
 
 [dev-packages]
 

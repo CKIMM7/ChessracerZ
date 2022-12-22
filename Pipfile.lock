@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0a78a636f467b39f7d0c9249d391cded095ad559045ed70d559dda7cfa51db86"
+            "sha256": "5f647bbeb8b16ed770507004061981f63c86a078de8281aa9846080bf9bbf3cb"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,21 +16,29 @@
         ]
     },
     "default": {
+        "bidict": {
+            "hashes": [
+                "sha256:415126d23a0c81e1a8c584a8fb1f6905ea090c772571803aeee0a2242e8e7ba0",
+                "sha256:5c826b3e15e97cc6e615de295756847c282a79b79c5430d3bfc909b1ac9f5bd8"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==0.22.0"
+        },
         "boto3": {
             "hashes": [
-                "sha256:0d6fcb87cd998bcebb0705967508539012a671ef0b1e2a888809fb6781e65b9f",
-                "sha256:30b09bed9d2b0807674466e2cb4fd43ad4a880cf76b708ae42f234cb0b636309"
+                "sha256:282c9aa0af39fc3f0fac9c91e05f43145ff3d5fee29189b5343490131555981a",
+                "sha256:f786a12eb036bbe6f473a351182275fd5c43c4e9c523cb8ec9b1946b18830d0d"
             ],
             "index": "pypi",
-            "version": "==1.26.34"
+            "version": "==1.26.35"
         },
         "botocore": {
             "hashes": [
-                "sha256:652a749e0649d1eacd8c43ae1493a773ff4e4e4ea4bc7e69f6787d28237dca20",
-                "sha256:a9dbd06b6cad50208cdc5b8db542505c8792b5acdf7d31ed8a7e99db5746ea79"
+                "sha256:ca673347f46f03fb5f1e56326adc9c696daba860838dffbe85e9bb16a8c54d67",
+                "sha256:fc329d2772284dcffdf947023de589eaf72a4eb4737505114b1c0f3a1063b3b6"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==1.29.34"
+            "version": "==1.29.35"
         },
         "click": {
             "hashes": [
@@ -71,6 +79,14 @@
             ],
             "index": "pypi",
             "version": "==0.14.0"
+        },
+        "flask-socketio": {
+            "hashes": [
+                "sha256:04093e3ca144467f9731c376796aff105d182ac4cccfcb056d05d567a675f306",
+                "sha256:11d1d78b8805cda351b27828a110b88c74a573be62b07f7f5a519fb67fae0a58"
+            ],
+            "index": "pypi",
+            "version": "==5.3.2"
         },
         "flask-sqlalchemy": {
             "hashes": [
@@ -255,6 +271,22 @@
             ],
             "index": "pypi",
             "version": "==0.21.0"
+        },
+        "python-engineio": {
+            "hashes": [
+                "sha256:7454314a529bba20e745928601ffeaf101c1b5aca9a6c4e48ad397803d10ea0c",
+                "sha256:d8d8b072799c36cadcdcc2b40d2a560ce09797ab3d2d596b2ad519a5e4df19ae"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==4.3.4"
+        },
+        "python-socketio": {
+            "hashes": [
+                "sha256:92395062d9db3c13d30e7cdedaa0e1330bba78505645db695415f9a3c628d097",
+                "sha256:d9a9f047e6fdd306c852fbac36516f4b495c2096f8ad9ceb8803b8e5ff5622e3"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==5.7.2"
         },
         "s3transfer": {
             "hashes": [
