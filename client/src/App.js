@@ -18,48 +18,6 @@ function App() {
     dispatch(userActions.signOut())
   }
 
-  const createAwsUser = () => {
-    axios.post(`${process.env.REACT_APP_URL}/iam/new`, {
-        name: user.name,
-        guid: user.guid
-      })
-  }
-
-  const ec2launchHandler = () => {
-    axios.post(`${process.env.REACT_APP_URL}/ec2/create`, {
-      name: user.name,
-      guid: user.guid
-    })
-  }
-
-  const ec2StopHandler = () => {
-    axios.post(`${process.env.REACT_APP_URL}/ec2/stop`, {
-      name: user.name,
-      guid: user.guid
-    })
-  }
-
-  const ec2StartHandler = () => {
-    axios.post(`${process.env.REACT_APP_URL}/ec2/start`, {
-      name: user.name,
-      guid: user.guid
-    })
-  }
-
-
-  const viewYourServers = () => {
-    axios.post(`${process.env.REACT_APP_URL}/ec2/instances`, {
-      name: user.name,
-      guid: user.guid
-    }).then((s) => {
-      console.log(s)
-
-    }).catch((e) => {
-      console.log(e)
-    })
-  }
-
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       //console.log(user)
@@ -106,15 +64,7 @@ function App() {
       : <p>user is not signed in</p>}
       <button onClick={signInHandler}>sign in with google</button>
       <button onClick={signOutHandler}>sign out</button>
-      {user.id && <button onClick={createAwsUser}>create aws user</button>}
-      
-      {user.id && <button onClick={ec2launchHandler}>launch EC2 instance</button>}
 
-      {user.id && <button onClick={ec2StopHandler}>stop EC2 instance</button>}
-
-      {user.id && <button onClick={ec2StartHandler}>start EC2 instance</button>}
-
-      {user.id && <button onClick={viewYourServers}>view your servers</button>}
       <p>{process.env.REACT_APP_URL}</p>
     </div>
   );
