@@ -2,6 +2,7 @@
 
 import pygame as p
 import chess_engine
+from app import socketio 
 
 width = 512
 height = 512
@@ -22,4 +23,18 @@ def load_pieces():
     
     for piece_value in piece:
         pieces[piece_value] = p.transform.scale(p.image.load('pieces/' + piece_value + '.png'), (square_size, square_size))
-    
+
+
+@socketio.on("piece-move")
+def piece_move(data):           ## data: {startPosX, startPosY, endPosX, endPosY}
+    if (validateMove(data)):              # is move allowed?
+        if(checkCheckmate(data)):              # does move result in checkmate?
+            socketio.emit("checkmate")          ## recieve on client
+        else:
+            socketio.emit("next-player")        ## recieve on client
+
+def validateMove(data):         # Checks if move is allowed
+    pass
+
+def checkCheckmate(data):       # Checks if move results in checkmate
+    pass
