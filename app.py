@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 from flask_sqlalchemy import SQLAlchemy 
 from flask_marshmallow import Marshmallow
-from flask_socketio import SocketIO, emit 
+from flask_socketio import SocketIO, join_room
 
 from werkzeug import exceptions
 from subprocess import Popen
@@ -80,8 +80,14 @@ def handle_message(data):
     socketio.emit("console-message", "yo")
 
 
+@socketio.on('create-lobby')
+def create_lobby(lobbyId):
+    join_room(lobbyId)
 
-
+@socketio.on('join-lobby')
+def join_lobby(lobbyId):
+    join_room(lobbyId)
+    socketio.emit("console-message", f"Joined {lobbyId} succesfully", room=lobbyId)
 
 @app.route('/user', methods=['POST'])
 def add_User():
