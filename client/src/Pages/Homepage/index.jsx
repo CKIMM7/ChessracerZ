@@ -11,11 +11,6 @@ function Homepage() {
     const navigate = useNavigate()
     const [lobbyId, setLobbyId] = useState("")
 
-    function sendMsg() {
-        console.log('message sent')
-        socket.emit("message", { name: "John" });
-    }
-
     function createLobby(e) {
         e.preventDefault()
         socket.emit("create-lobby", lobbyId)
@@ -49,7 +44,6 @@ function Homepage() {
             <main>
                 <img src={logo} alt="Logo" />
                 <h1>ChessRacerZ</h1>
-                <button onClick={sendMsg}>send message</button>
                 <input type="text" placeholder="Enter LobbyId" onChange={updateLobbyId} value={lobbyId} required/>
                 <button onClick={createLobby}>Create Lobby</button>
                 <button onClick={joinLobby}>Join Lobby</button>
