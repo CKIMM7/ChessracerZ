@@ -70,6 +70,14 @@ users_schema = UserSchema(many=True)
 def on_connect():
   print("Client connected")
 
+@socketio.on('message')
+def handle_message(data):
+    print(data)
+
+
+
+
+
 @app.route('/user', methods=['POST'])
 def add_User():
 
