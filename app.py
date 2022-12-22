@@ -82,12 +82,31 @@ def handle_message(data):
 
 @socketio.on('create-lobby')
 def create_lobby(lobbyId):
-    join_room(lobbyId)
+    try:
+        socketio.server.manager.rooms['/'][lobbyId]
+        socketio.emit("console-message", "Lobby name already taken")
+    except:
+        join_room(lobbyId)
+        socketio.emit("console-message", f"{request.sid} created {lobbyId} succesfully", room=lobbyId)
+       
+
 
 @socketio.on('join-lobby')
 def join_lobby(lobbyId):
-    join_room(lobbyId)
-    socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
+
+    rooms = socketio.server.manager.rooms   # gets all rooms
+    lobby = rooms['/'][lobbyId]             # gets current lobby from room
+
+    if (not lobby):
+        socketio.emit("console-message", "Lobby doesn't exist")
+    elif (len(lobby) >= 2):
+        socketio.emit("console-message", "Lobby is already full")
+    else:
+        join_room(lobbyId)
+        socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
+
+
+
 
 @app.route('/user', methods=['POST'])
 def add_User():
