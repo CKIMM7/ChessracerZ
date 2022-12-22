@@ -1,15 +1,12 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
-import { userActions } from './store/store';
-import { auth } from "./firebase";
+import { userActions } from '../../../../store/store';
+import { auth } from "../../../../firebase";
 
 import axios from 'axios'
 
-import { Header } from "./components"
-
-function App() {
-
-  const dispatch = useDispatch();
+function GoogleLogin() {
+    const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
 
   const signInHandler = () => {
@@ -58,9 +55,16 @@ function App() {
     return unsubscribe
   }, [])
 
-  return <>
-          <Header />
-        </>
+  return <div id="login">
+            <>{user ? <div><p>user: {user.uid}</p>
+              <img src={user.photo}></img>
+              </div> : <p>user is not signed in</p>}
+            <button onClick={signInHandler}>sign in with google</button>
+            <button onClick={signOutHandler}>sign out</button>
+
+             <p>{process.env.REACT_APP_URL}</p></>
+        </div>
+
 }
 
-export default App;
+export default GoogleLogin;
