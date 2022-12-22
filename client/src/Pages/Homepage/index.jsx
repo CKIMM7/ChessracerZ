@@ -1,6 +1,8 @@
 import React from "react"
 import { useNavigate } from 'react-router-dom'
 
+import "./homepage.css"
+
 const logo = require("../../assets/ChessRacerZ_logo.png")
 
 function Homepage() {

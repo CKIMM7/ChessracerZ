@@ -1,0 +1,12 @@
+main {
+    height: 100%;
+    text-align: center;
+
+    padding-top: 20vh;
+    padding-bottom: 40vh;
+    background-color: grey;
+}
+
+main h1 {
+    font-size: 50px;
+}
