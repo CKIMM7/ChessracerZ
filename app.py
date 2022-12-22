@@ -74,12 +74,6 @@ def on_connect():
 def on_disconnect():
   print("Client disconnected")
 
-@socketio.on('message')
-def handle_message(data):
-    print(data)
-    socketio.emit("console-message", "yo")
-
-
 @socketio.on('create-lobby')
 def create_lobby(lobbyId):
     try:
