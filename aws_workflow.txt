@@ -1,0 +1,30 @@
+1. user creates a IAM user
+* which gives access to resouces like this
+
+    ec2 = boto3.resource('ec2',
+         aws_access_key_id='AKIAUCXTXAAIXQCVARSC',
+         aws_secret_access_key='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',
+         region_name='eu-west-2')
+
+save this credentials to the user or on the server
+
+3. creates ec2 instance -> is where client will d
+
+4. enable automatic deployment
+
+*authentication flow:
+1. firebase google authentication token to identify user's id on the backend
+2. if user has set up a server with deployments, bring all info to the frontend
+
+
+*things that need to be stored in the user database:
+-aws_access_key_id
+-aws_secret_access_key
+-region_name
+-user name
+
+*making users is done with a different set of
+-aws_access_key_id
+-aws_secret_access_key
+-everything else is done by a user's own unique
+set of aws_access_key_id andaws_secret_access_key
