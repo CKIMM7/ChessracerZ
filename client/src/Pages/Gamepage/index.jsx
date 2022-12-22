@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Header } from "../../components"
+import { Header, Board } from "../../components"
 
 import "./gamepage.css"
 
@@ -11,6 +11,7 @@ function Gamepage() {
             <main>
                 <div id="chess-game">
                     <p>Chess Game</p>
+                    <Board/>
                 </div>
             </main>
         </>
