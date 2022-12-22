@@ -88,6 +88,7 @@ def create_lobby(lobbyId):
     except:
         join_room(lobbyId)
         socketio.emit("console-message", f"{request.sid} created {lobbyId} succesfully", room=lobbyId)
+        socketio.emit("send-to-game", room=request.sid)
        
 
 
@@ -104,6 +105,7 @@ def join_lobby(lobbyId):
     else:
         join_room(lobbyId)
         socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
+        socketio.emit("send-to-game", room=request.sid)
 
 
 
