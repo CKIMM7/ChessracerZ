@@ -2,7 +2,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 from flask_sqlalchemy import SQLAlchemy 
-from flask_marshmallow import Marshmallow 
+from flask_marshmallow import Marshmallow
+from flask_socketio import SocketIO, emit 
 
 from werkzeug import exceptions
 from subprocess import Popen
@@ -15,7 +16,7 @@ from dotenv import load_dotenv
 
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'secret!'
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(dotenv_path='.env', verbose=True)
@@ -27,6 +28,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
 db = SQLAlchemy(app)
+
+# Init db
+socketio = SocketIO(app, cors_allowed_origins='*')
+
 # Init ma
 ma = Marshmallow(app)
 
@@ -60,6 +65,17 @@ class UserSchema(ma.Schema):
 # Init schema
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
+
+@socketio.on("connect")
+def on_connect():
+  print("Client connected")
+
+@socketio.on('message')
+def handle_message(data):
+    print(data)
+
+
+
 
 
 @app.route('/user', methods=['POST'])
@@ -335,4 +351,4 @@ def ec_terminate_instances():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app)

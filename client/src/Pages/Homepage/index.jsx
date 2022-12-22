@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
+import { socket } from "../../socket"
 
 import "./homepage.css"
 
@@ -13,11 +14,26 @@ function Homepage() {
         navigate('/game')
     }
 
+    function sendMsg() {
+        console.log('message sent')
+        socket.emit("message", { name: "John" });
+    }
+
+    useEffect(() => {
+    socket.on('connect', function() {
+        console.log(`${socket.id} connected`)
+    });
+    
+    }, [socket])
+
+
+
     return<>
             <main>
                 <img src={logo} alt="Logo" />
                 <h1>ChessRacerZ</h1>
                 <button onClick={sendToGame}>Start Game</button>
+                <button onClick={sendMsg}>send message</button>
             </main>
         </>
 }
