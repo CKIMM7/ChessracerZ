@@ -9,17 +9,17 @@ from werkzeug import exceptions
 from subprocess import Popen
 import pathlib
 import hellopy
-import boto3
+# import boto3
 
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-load_dotenv(dotenv_path='.env', verbose=True)
+# load_dotenv(dotenv_path='.env', verbose=True)
 
 CORS(app)
 
