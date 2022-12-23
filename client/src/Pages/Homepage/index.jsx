@@ -44,10 +44,11 @@ function Homepage() {
             <main>
                 <img src={logo} alt="Logo" />
                 <h1>ChessRacerZ</h1>
-                <input type="text" placeholder="Enter LobbyId" onChange={updateLobbyId} value={lobbyId} required/>
-                <button onClick={createLobby}>Create Lobby</button>
-                <button onClick={joinLobby}>Join Lobby</button>
-                
+                <div id="lobbyOptions">
+                    <input type="text" placeholder="Enter LobbyId" onChange={updateLobbyId} value={lobbyId} required/>
+                    <button onClick={createLobby}>Create Lobby</button>
+                    <button onClick={joinLobby}>Join Lobby</button>
+                </div>
             </main>
         </>
 }
