@@ -110,7 +110,7 @@ def join_lobby(lobbyId):
         startTimer(lobbyId)
 
 async def startTimer(lobbyId):
-  await socketio.sleep(93)
+  await socketio.sleep(23)
   print("timer finished")
   socketio.emit("timer-end", room=lobbyId)
 
