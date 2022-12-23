@@ -26,6 +26,9 @@ function Homepage() {
             console.log(`${socket.id} connected`)
         });
   
+        socket.on("console-message", function(msg){
+            console.log(msg)
+        })
     }, [])
 
     socket.on("console-message", function(msg){

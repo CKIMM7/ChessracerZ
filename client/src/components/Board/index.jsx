@@ -49,7 +49,25 @@ const Board = ({ lobbyId, color }) =>{
             to: target,
             promotion:'q'
          })}
-    )
+    )}
+
+    function onOpponentDrop(source,target, arg=null, updateOpponent=null){
+
+      console.log(color)
+      if(game.turn() == color) return;
+
+      if(updateOpponent == null) socket.emit("pass-game", lobbyId, source, target)
+      let move = null;
+
+      safeGameMutate(
+        
+        (game)=>{
+          move = game.move({
+          from:source,
+          to: target,
+          promotion:'q'
+       })}
+  )
  //illegal move 
     if(move== null) return false
 
@@ -61,7 +79,7 @@ const Board = ({ lobbyId, color }) =>{
   useEffect(() => {
     socket.on("get-moves", function(moves){
       console.log(moves)
-      onDrop(moves.src, moves.tar, null, 'ud')
+      onOpponentDrop(moves.src, moves.tar, null, 'ud')
   })
   }, [])
 
