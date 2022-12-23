@@ -5,7 +5,6 @@ import { socket } from "../../socket"
 import { Header, Board } from "../../components"
 
 import "./gamepage.css"
-import { useEffect } from "react"
 
 function Gamepage() {
  
@@ -16,7 +15,6 @@ function Gamepage() {
 
     console.log(lobbyId)
 
-    useEffect
     socket.on("console-message", function(msg){
         console.log(msg)
         if (msg.includes(`joined ${lobbyId} succesfully`)){
