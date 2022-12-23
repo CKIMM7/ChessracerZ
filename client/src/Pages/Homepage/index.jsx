@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { socket } from "../../socket"
 
@@ -9,35 +9,46 @@ const logo = require("../../assets/ChessRacerZ_logo.png")
 function Homepage() {
  
     const navigate = useNavigate()
+    const [lobbyId, setLobbyId] = useState("")
 
-    function sendToGame() {
-        navigate('/game')
+    function createLobby(e) {
+        e.preventDefault()
+        socket.emit("create-lobby", lobbyId)
     }
 
-    function sendMsg() {
-        console.log('message sent')
-        socket.emit("message", { name: "John" });
+    function joinLobby(e) {
+        e.preventDefault()
+        socket.emit("join-lobby", lobbyId)
     }
 
     useEffect(() => {
-    socket.on('connect', function() {
-        console.log(`${socket.id} connected`)
-    });
-    
+        socket.on('connect', function() {
+            console.log(`${socket.id} connected`)
+        });
+  
+    }, [])
+
     socket.on("console-message", function(msg){
         console.log(msg)
     })
 
-    }, [socket])
+    socket.on("send-to-game", () => {
+        navigate("/game", {state: { lobbyId }})
+    })
 
-
+    function updateLobbyId(e) {
+        setLobbyId(e.target.value)
+    }
 
     return<>
             <main>
                 <img src={logo} alt="Logo" />
                 <h1>ChessRacerZ</h1>
-                <button onClick={sendToGame}>Start Game</button>
-                <button onClick={sendMsg}>send message</button>
+                <div id="lobbyOptions">
+                    <input type="text" placeholder="Enter LobbyId" onChange={updateLobbyId} value={lobbyId} required/>
+                    <button onClick={createLobby}>Create Lobby</button>
+                    <button onClick={joinLobby}>Join Lobby</button>
+                </div>
             </main>
         </>
 }

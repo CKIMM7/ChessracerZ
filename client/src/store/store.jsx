@@ -3,6 +3,7 @@ import { createSlice, current } from '@reduxjs/toolkit';
 import { auth } from '../firebase';
 import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from 'react-redux';
+import { Chess } from 'chess.js'
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -12,9 +13,12 @@ const userSlice = createSlice({
         user: '',
         iAmId: '',
         instanceId: '',
+        game: new Chess()
     },
 
     reducers: {
+
+
 
         setUser(state, action) {
             console.log(action.payload)

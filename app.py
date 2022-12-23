@@ -9,17 +9,18 @@ from werkzeug import exceptions
 from subprocess import Popen
 import pathlib
 import hellopy
-import boto3
+# import boto3
+import asyncio
 
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-load_dotenv(dotenv_path='.env', verbose=True)
+# load_dotenv(dotenv_path='.env', verbose=True)
 
 CORS(app)
 
@@ -74,13 +75,57 @@ def on_connect():
 def on_disconnect():
   print("Client disconnected")
 
-@socketio.on('message')
-def handle_message(data):
-    print(data)
-    socketio.emit("console-message", "yo")
+@socketio.on('create-lobby')
+def create_lobby(lobbyId):
+    try:
+        socketio.server.manager.rooms['/'][lobbyId]
+        socketio.emit("console-message", "Lobby name already taken")
+    except:
+        join_room(lobbyId)
+        socketio.emit("console-message", f"{request.sid} created {lobbyId} succesfully", room=lobbyId)
+        socketio.emit("send-to-game", room=request.sid)
+       
 
-    socketio.emit('recieve', 'yo')
-    #send("recieve", broadcast=True)
+
+@socketio.on('join-lobby')
+def join_lobby(lobbyId):
+
+    rooms = socketio.server.manager.rooms   # gets all rooms
+    lobby = rooms['/'][lobbyId]             # gets current lobby from room
+
+    if (not lobby):
+        socketio.emit("console-message", "Lobby doesn't exist")
+    elif (len(lobby) >= 2):
+        socketio.emit("console-message", "Lobby is already full")
+    else:
+        join_room(lobbyId)
+        socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
+        socketio.emit("send-to-game", room=request.sid)
+
+
+# Game timer
+@socketio.on('start-game')
+def startGame(lobbyId):
+  print("starting timer")
+  asyncio.run(startTimer(lobbyId))
+
+
+async def startTimer(lobbyId):
+  await asyncio.sleep(90)
+  print("timer finished")
+  socketio.emit("timer-end", room=lobbyId)
+
+@socketio.on('pass-game')
+def updateGame(lobbyId, source, target):
+  print('updatedGame')
+
+  moves = {
+          'src': source,
+          'tar': target
+          }
+  print(moves)
+
+  socketio.emit("get-moves", moves, room=lobbyId)
 
 
 @app.route('/user', methods=['POST'])
