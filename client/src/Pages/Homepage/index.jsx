@@ -26,14 +26,18 @@ function Homepage() {
             console.log(`${socket.id} connected`)
         });
   
+        socket.on("console-message", function(msg){
+            console.log(msg)
+        })
     }, [])
 
     socket.on("console-message", function(msg){
         console.log(msg)
     })
 
-    socket.on("send-to-game", () => {
-        navigate("/game", {state: { lobbyId }})
+    socket.on("send-to-game", (color) => {
+        console.log(color)
+        navigate("/game", {state: { lobbyId, color }})
     })
 
     function updateLobbyId(e) {
