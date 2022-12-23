@@ -57,6 +57,12 @@ const Board = ({ lobbyId }) =>{
   })
   }, [])
 
+//   function checkmate(){
+//         game.on('checkmate', (attack)=>{
+//             console.log('You won with ' + attack)
+//         })
+//   }
+
   return (
     <div className="app">
       <Chessboard 
