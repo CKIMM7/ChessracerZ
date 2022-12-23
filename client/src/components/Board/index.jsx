@@ -7,8 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 import "./board.css"
 
-const Board = ({ lobbyId, color }) =>{
-    const navigate = useNavigate()
+const Board = ({ lobbyId, color, draggable}) =>{
     const [game, setGame] = useState(new Chess());
 
     if (!color) color ='b'
@@ -37,10 +36,9 @@ const Board = ({ lobbyId, color }) =>{
     console.log(color)    
     function onDrop(source,target, arg=null, updateOpponent=null){
 
-        console.log(color)
         if(game.turn() !== color) return;
 
-        if(updateOpponent == null) socket.emit("pass-game", lobbyId, source, target)
+        if(updateOpponent === null) socket.emit("pass-game", lobbyId, source, target)
         let move = null;
 
         safeGameMutate(
@@ -55,10 +53,8 @@ const Board = ({ lobbyId, color }) =>{
 
     function onOpponentDrop(source,target, arg=null, updateOpponent=null){
 
-      console.log(color)
-      if(game.turn() == color) return;
+      if(game.turn() === color) return;
 
-      if(updateOpponent == null) socket.emit("pass-game", lobbyId, source, target)
       let move = null;
 
       safeGameMutate(
@@ -109,6 +105,7 @@ const Board = ({ lobbyId, color }) =>{
       position={game.fen()}
       onPieceDrop ={onDrop}
       boardOrientation={color == 'w' ? 'white' : 'black'}
+      arePiecesDraggable = {draggable}
       />
     </div>
   );

@@ -10,9 +10,11 @@ import { useEffect } from "react"
 function Gamepage() {
  
     const [waitMessage, setWaitMessage] = useState("Waiting on opponent...")
+    const [draggable, setDraggable] = useState(false)
 
     const { state } = useLocation()
     const { lobbyId, color } = state
+
 
     useEffect(() => {
         socket.on("console-message", function(msg){
@@ -36,9 +38,11 @@ function Gamepage() {
                 if (countdown === 0) {
                   clearInterval(countdownInterval)
                   document.getElementById("waiting").style.display = "none"
+                  setDraggable(true)
                 }
             }, 1000);
     
+            
           });
     }, [])
 
@@ -49,7 +53,7 @@ function Gamepage() {
                     <div id="waiting">{waitMessage}</div>
                     <div id="chess-game">
                         <p>Chess Game</p>
-                        <Board lobbyId={lobbyId} color={color}/>
+                        <Board lobbyId={lobbyId} color={color} draggable={draggable}/>
                     </div>
                 </main>
             </>
