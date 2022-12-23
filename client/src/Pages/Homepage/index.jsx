@@ -2,6 +2,8 @@ import React, { useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
 import { socket } from "../../socket"
 
+import "./homepage.css"
+
 const logo = require("../../assets/ChessRacerZ_logo.png")
 
 function Homepage() {
@@ -21,10 +23,10 @@ function Homepage() {
     socket.on('connect', function() {
         console.log(`${socket.id} connected`)
     });
-
-    socket.on('recieve', function(d) {
-        console.log(d)
-    });
+    
+    socket.on("console-message", function(msg){
+        console.log(msg)
+    })
 
     }, [socket])
 
