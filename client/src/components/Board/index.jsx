@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Chessboard } from 'react-chessboard'
 import { Chess } from 'chess.js'
 import { socket } from '../../socket'
+import { useNavigate } from 'react-router-dom'
 
 import "./board.css"
 
 const Board = ({ lobbyId, color }) =>{
+    const navigate = useNavigate()
     const [game, setGame] = useState(new Chess());
 
     if (!color) color ='b'
@@ -66,7 +68,11 @@ const Board = ({ lobbyId, color }) =>{
           from:source,
           to: target,
           promotion:'q'
-       })}
+       })
+       if(game.in_checkmate()){
+            socket.emit("end-game", lobbyId)
+       }
+    }
   )
  //illegal move 
     if(move== null) return false
@@ -84,18 +90,25 @@ const Board = ({ lobbyId, color }) =>{
   }, [])
 
 //   function checkmate(){
-//         game.on('checkmate', (attack)=>{
-//             console.log('You won with ' + attack)
+//         // game.on('checkmate', (attack)=>{
+//         //     console.log('You won with ' + attack)
+//         // })
+//         safeGameMutate((game) =>{
+//             if(game.checkmate()){
+//                 socket.emit("pass-game", lobbyId, source, target)
+//             }
 //         })
 //   }
 
+    socket.on("send-to-home", () => {
+        navigate("/")
+    })
   return (
     <div className="app">
       <Chessboard 
       position={game.fen()}
       onPieceDrop ={onDrop}
       boardOrientation={color == 'w' ? 'white' : 'black'}
-
       />
     </div>
   );

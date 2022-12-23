@@ -126,6 +126,16 @@ def updateGame(lobbyId, source, target):
   print(moves)
   socketio.emit("get-moves", moves, room=lobbyId)
 
+@socketio.on('end-game')
+def endGame(lobbyId):
+  print('Game has ended')
+  leave_room(lobbyId)
+  socketio.sleep(7)
+  socketio.emit("send-to-home", room=request.sid)
+  rooms = socketio.server.manager.rooms   # gets all rooms
+  lobby = rooms['/'][lobbyId]             # gets current lobby from room
+  print(lobby)
+  socketio.emit('end-game', room=lobbyId)
 
 @app.route('/user', methods=['POST'])
 def add_User():
