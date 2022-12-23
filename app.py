@@ -68,8 +68,11 @@ user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 @socketio.on("connect")
-def on_connect(): 
+def on_connect():
+  rooms = socketio.server.manager.rooms
+  print(rooms)
   print("Client connected")
+
 
 @socketio.on("disconnect")
 def on_disconnect():
@@ -83,7 +86,7 @@ def create_lobby(lobbyId):
     except:
         join_room(lobbyId)
         socketio.emit("console-message", f"{request.sid} created {lobbyId} succesfully", room=lobbyId)
-        socketio.emit("send-to-game", room=request.sid)
+        socketio.emit("send-to-game", 'w', room=request.sid)
        
 
 
@@ -120,7 +123,6 @@ def updateGame(lobbyId, source, target):
           'tar': target
           }
   print(moves)
-
   socketio.emit("get-moves", moves, room=lobbyId)
 
 

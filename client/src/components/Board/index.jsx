@@ -4,9 +4,17 @@ import { Chessboard } from 'react-chessboard'
 import { Chess } from 'chess.js'
 import { socket } from '../../socket'
 
-const Board = ({ lobbyId }) =>{
+import "./board.css"
+
+const Board = ({ lobbyId, color }) =>{
     const [game, setGame] = useState(new Chess());
-    const gameStore = useSelector(state => state.user.game) 
+
+    if (!color) color ='b'
+
+    //console.log(game.board())
+    // console.log(game.ascii())
+    console.log('color')
+    console.log(game.turn())
   
     function safeGameMutate(modify){
 
@@ -24,15 +32,15 @@ const Board = ({ lobbyId }) =>{
         })
     } 
 
+    console.log(color)    
     function onDrop(source,target, arg=null, updateOpponent=null){
 
-        //console.log(source,target)
-        console.log(arg)
-        console.log(updateOpponent)
+        console.log(color)
+        if(game.turn() !== color) return;
 
         if(updateOpponent == null) socket.emit("pass-game", lobbyId, source, target)
-
         let move = null;
+
         safeGameMutate(
           
           (game)=>{
@@ -62,6 +70,8 @@ const Board = ({ lobbyId }) =>{
       <Chessboard 
       position={game.fen()}
       onPieceDrop ={onDrop}
+      boardOrientation={color == 'w' ? 'white' : 'black'}
+
       />
     </div>
   );

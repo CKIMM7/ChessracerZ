@@ -11,7 +11,7 @@ function Gamepage() {
     const [waitMessage, setWaitMessage] = useState("Waiting on opponent...")
 
     const { state } = useLocation()
-    const { lobbyId } = state
+    const { lobbyId, color } = state
 
     console.log(lobbyId)
 
@@ -42,12 +42,13 @@ function Gamepage() {
       });
 
     return<>
+                <Header />
                 <main>
                     <p>Lobby: {lobbyId}</p>
                     <div id="waiting">{waitMessage}</div>
                     <div id="chess-game">
                         <p>Chess Game</p>
-                        <Board lobbyId={lobbyId}/>
+                        <Board lobbyId={lobbyId} color={color}/>
                     </div>
                 </main>
             </>

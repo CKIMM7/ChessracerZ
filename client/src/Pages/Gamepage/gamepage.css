@@ -14,3 +14,7 @@ div#waiting {
     padding: 20px;
     z-index: 1;
 }
+
+svg {
+    /* transform: rotate(3.142rad); */
+}
