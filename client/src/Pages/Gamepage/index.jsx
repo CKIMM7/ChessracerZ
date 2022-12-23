@@ -15,6 +15,14 @@ function Gamepage() {
 
     socket.on("console-message", function(msg){
         console.log(msg)
+        if (msg.includes(`joined ${lobbyId} succesfully`)){
+            console.log("Both players connected")
+            socket.emit("start-game", lobbyId)
+        }
+    })
+
+    socket.on("timer-end", () => {
+        console.log("end")
     })
 
     return<>

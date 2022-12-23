@@ -10,6 +10,7 @@ from subprocess import Popen
 import pathlib
 import hellopy
 # import boto3
+import asyncio
 
 import os
 # from dotenv import load_dotenv
@@ -102,7 +103,17 @@ def join_lobby(lobbyId):
         socketio.emit("send-to-game", room=request.sid)
 
 
+# Game timer
+@socketio.on('start-game')
+def startGame(lobbyId):
+  print("starting timer")
+  asyncio.run(startTimer(lobbyId))
 
+
+async def startTimer(lobbyId):
+  await asyncio.sleep(90)
+  print("timer finished")
+  socketio.emit("timer-end", room=lobbyId)
 
 @app.route('/user', methods=['POST'])
 def add_User():
