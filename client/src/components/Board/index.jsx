@@ -35,7 +35,6 @@ const Board = ({ lobbyId, color }) =>{
     console.log(color)    
     function onDrop(source,target, arg=null, updateOpponent=null){
 
-        console.log(color)
         if(game.turn() !== color) return;
 
         if(updateOpponent == null) socket.emit("pass-game", lobbyId, source, target)
@@ -53,7 +52,6 @@ const Board = ({ lobbyId, color }) =>{
 
     function onOpponentDrop(source,target, arg=null, updateOpponent=null){
 
-      console.log(color)
       if(game.turn() == color) return;
 
       if(updateOpponent == null) socket.emit("pass-game", lobbyId, source, target)
