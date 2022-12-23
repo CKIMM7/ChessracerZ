@@ -6,7 +6,7 @@ import { socket } from '../../socket'
 
 import "./board.css"
 
-const Board = ({ lobbyId, color }) =>{
+const Board = ({ lobbyId, color, draggable}) =>{
     const [game, setGame] = useState(new Chess());
 
     if (!color) color ='b'
@@ -86,7 +86,7 @@ const Board = ({ lobbyId, color }) =>{
       position={game.fen()}
       onPieceDrop ={onDrop}
       boardOrientation={color == 'w' ? 'white' : 'black'}
-
+      arePiecesDraggable = {draggable}
       />
     </div>
   );
