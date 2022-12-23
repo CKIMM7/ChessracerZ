@@ -37,7 +37,7 @@ const Board = ({ lobbyId, color }) =>{
 
         if(game.turn() !== color) return;
 
-        if(updateOpponent == null) socket.emit("pass-game", lobbyId, source, target)
+        if(updateOpponent === null) socket.emit("pass-game", lobbyId, source, target)
         let move = null;
 
         safeGameMutate(
@@ -52,9 +52,8 @@ const Board = ({ lobbyId, color }) =>{
 
     function onOpponentDrop(source,target, arg=null, updateOpponent=null){
 
-      if(game.turn() == color) return;
+      if(game.turn() === color) return;
 
-      if(updateOpponent == null) socket.emit("pass-game", lobbyId, source, target)
       let move = null;
 
       safeGameMutate(
