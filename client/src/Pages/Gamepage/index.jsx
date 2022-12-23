@@ -42,7 +42,6 @@ function Gamepage() {
       });
 
     return<>
-                <Header />
                 <main>
                     <p>Lobby: {lobbyId}</p>
                     <div id="waiting">{waitMessage}</div>
