@@ -31,10 +31,6 @@ function Homepage() {
         })
     }, [])
 
-    socket.on("console-message", function(msg){
-        console.log(msg)
-    })
-
     socket.on("send-to-game", (color) => {
         console.log(color)
         navigate("/game", {state: { lobbyId, color }})
