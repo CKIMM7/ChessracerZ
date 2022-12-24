@@ -2,6 +2,10 @@ div#chess-game {
     text-align: center;
 }
 
+div#chess-game {
+    text-align: center;
+}
+
 div#waiting {
     position: absolute;
     top: 50vh;
