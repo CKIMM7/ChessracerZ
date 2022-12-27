@@ -111,8 +111,9 @@ def join_lobby(lobbyId):
 def startTimer(lobbyId):
   socketio.sleep(3)
   print(f"Lobby {lobbyId}: Starting timer")
-  socketio.emit("start-timer", room=lobbyId)
-  socketio.sleep(20)
+  time = 20
+  socketio.emit("start-timer", time ,room=lobbyId)
+  socketio.sleep(time)
   print(f"Lobby {lobbyId}: Timer finished")
   socketio.emit("timer-end", room=lobbyId)
   try:

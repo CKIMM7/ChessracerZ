@@ -5,14 +5,14 @@ import "./timer.css"
 
 function Timer() {
 
-    const [timer, setTimer] = useState(20)
+    const [timer, setTimer] = useState(0)
     const timerRef = useRef(timer) 
 
     useEffect(() => {
-        socket.on("start-timer", () => {
+        socket.on("start-timer", function(time){
             console.log("starting timer")
-            setTimer(20)
-            timerRef.current = timer
+            setTimer(time)
+            timerRef.current = time
             const timerInterval = setInterval(() => {
                 timerRef.current -= 1
                 setTimer(timerRef.current)
