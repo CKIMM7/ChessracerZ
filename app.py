@@ -109,11 +109,15 @@ def join_lobby(lobbyId):
         startTimer(lobbyId)
 
 def startTimer(lobbyId):
-  print("starting timer")
+  print(f"Lobby {lobbyId}: Starting timer")
   socketio.sleep(23)
-  print("timer finished")
+  print(f"Lobby {lobbyId}: Timer finished")
   socketio.emit("timer-end", room=lobbyId)
-  startTimer(lobbyId)
+  try:
+    lobby = socketio.server.manager.rooms['/'][lobbyId]
+    startTimer(lobbyId)
+  except:
+    print(f"Lobby {lobbyId}: Timer finished lobby closed")
 
 @socketio.on('pass-game')
 def updateGame(lobbyId, source, target):
