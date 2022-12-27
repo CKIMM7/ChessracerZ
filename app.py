@@ -104,13 +104,15 @@ def join_lobby(lobbyId):
         socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
         socketio.emit("send-to-game", room=request.sid)
         socketio.sleep(1)
-        socketio.emit("start-game", room=lobbyId)
         socketio.emit("console-message", f"game starting...", room=lobbyId)
+        socketio.emit("start-game", room=lobbyId)
         startTimer(lobbyId)
 
 def startTimer(lobbyId):
+  socketio.sleep(3)
   print(f"Lobby {lobbyId}: Starting timer")
-  socketio.sleep(23)
+  socketio.emit("start-timer", room=lobbyId)
+  socketio.sleep(20)
   print(f"Lobby {lobbyId}: Timer finished")
   socketio.emit("timer-end", room=lobbyId)
   try:
