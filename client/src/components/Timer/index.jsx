@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react"
 import { socket } from '../../socket'
 
+import "./timer.css"
+
 function Timer() {
 
     const [timer, setTimer] = useState(20)
