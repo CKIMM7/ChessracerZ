@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useLocation } from 'react-router-dom'
 import { socket } from "../../socket"
 
-import { Header, Board, Race } from "../../components"
+import { Header, Board, Race, Timer } from "../../components"
 
 import "./gamepage.css"
 import { useEffect } from "react"
@@ -12,6 +12,7 @@ function Gamepage() {
     const [waitMessage, setWaitMessage] = useState("Waiting on opponent...")
     const [draggable, setDraggable] = useState(false)
     const [round, setRound] = useState(0)
+
 
     const { state } = useLocation()
     const { lobbyId, color } = state
@@ -25,11 +26,7 @@ function Gamepage() {
                 socket.emit("start-game", lobbyId)
             }
         })
-    
-        socket.on("timer-end", () => {
-            console.log("end")
-        })
-    
+            
         socket.on("start-game", function() {
             let countdown = 4
     
@@ -68,6 +65,7 @@ function Gamepage() {
     return<>
                 <Header />
                 <main>
+                    <Timer />
                     <p>Lobby: {lobbyId}</p>
                     <div id="waiting">{waitMessage}</div>
                     <div id="chess-game">
