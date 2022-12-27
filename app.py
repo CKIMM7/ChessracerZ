@@ -121,13 +121,13 @@ def startTimer(lobbyId):
 
 @socketio.on('pass-game')
 def updateGame(lobbyId, source, target):
-  print('updatedGame')
+  print(f"Lobby {lobbyId}: updatedGame")
 
   moves = {
           'src': source,
           'tar': target
           }
-  print(moves)
+  print(f"Lobby {lobbyId}: {moves}")
   socketio.emit("get-moves", moves, room=lobbyId)
 
 @socketio.on('end-game')
