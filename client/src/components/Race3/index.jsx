@@ -1,15 +1,13 @@
 import React from "react";
-import Phaser from 'phaser';
-import SceneMain from './scenes/SceneMain';
+import Phaser from 'phaser'
+import SceneMain from "./scenes/SceneMain";
 
-
-
-export default class Game4 extends React.Component {
+export default class Game extends React.Component {
     componentDidMount() {
         const config = {
             type: Phaser.AUTO,
             parent: 'phaser-example',
-            width: 1000,
+            width: 1300,
             height: 1000,
             backgroundColor:0x000000,
             scene: SceneMain,
@@ -29,6 +27,3 @@ export default class Game4 extends React.Component {
       return <div id="phaser-game" />;
     }
   }
-
-
-

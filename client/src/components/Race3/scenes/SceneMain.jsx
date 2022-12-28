@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import Phaser from 'phaser'
 import Align from "../util/align"
 
 export default class SceneMain extends Phaser.Scene {
@@ -27,16 +27,22 @@ export default class SceneMain extends Phaser.Scene {
         this.physics.add.collider(this.player, hillssLayer);
 
         cactusLayer.setCollisionBetween(38, 39)   
-        hillssLayer.setCollisionBetween(5, 50)   
+        hillssLayer.setCollisionBetween(5, 50)
+
+        //horizontal & vertical walls
+        //hillssLayer.setCollisionBetween(138, 157)   
+        
+        //corner walls
+        hillssLayer.setCollisionBetween(137, 158)  
 
     }
     update() {
-        this.player.setVelocityY(10);
-        this.player.setVelocityX(10);
+      this.player.setVelocityY(0);
+      this.player.setVelocityX(0);
 
        if (this.cursors.up.isDown==true)
        {
-         this.player.setVelocityY(-100);
+        this.player.setVelocityY(-500);
        }
        if (this.cursors.down.isDown==true)
        {
