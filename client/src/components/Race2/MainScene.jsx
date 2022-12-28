@@ -1,5 +1,8 @@
 import Phaser from 'phaser';
 
+import Settings from './helpers/settings'
+import Camera from './helpers/camera';
+import Circuit from './helpers/circuit'
 
 // screen size
 const SCREEN_W = 1920;
@@ -46,9 +49,9 @@ export default class MainScene extends Phaser.Scene
 		this.sprBack = this.add.image(SCREEN_CX, SCREEN_CY, 'imgBack');
 		
 		// instances
-		// this.circuit = new Circuit(this);
-		// this.camera = new Camera(this);
-		// this.settings = new Settings(this);
+		this.circuit = new Circuit(this);
+		this.camera = new Camera(this);
+		this.settings = new Settings(this);
 		
 		// listener to pause game
 		this.input.keyboard.on('keydown-P', function(){
@@ -69,21 +72,21 @@ export default class MainScene extends Phaser.Scene
 	update(time, delta){
 		switch(state){
 			case STATE_INIT:
-				//this.camera.init();
+				this.camera.init();
 				//console.log(`main scene loaded`)
 				state = STATE_RESTART;
 				break;
 				
 			case STATE_RESTART:
-				//this.circuit.create();
+				this.circuit.create();
 				
 				state = STATE_PLAY;
 				break;
 				
 			case STATE_PLAY:
 				console.log('STATE_PLAY')
-				//this.camera.update();				
-				//this.circuit.render3D();
+				this.camera.update();				
+				this.circuit.render3D();
 				
 				break;
 				
