@@ -14,8 +14,8 @@ function Timer() {
                 clearInterval(timerInterval)
             } catch {}
             console.log("starting timer")
-            setTimer(time)
-            timerRef.current = time
+            setTimer(time - 1)
+            timerRef.current = time - 1
             const timerInterval = setInterval(() => {
                 timerRef.current -= 1
                 setTimer(timerRef.current)
