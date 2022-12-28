@@ -31,6 +31,9 @@ export default class SceneMain extends Phaser.Scene {
         this.physics.add.collider(this.player, cactusLayer);
         this.physics.add.collider(this.player, hillssLayer);
 
+        this.physics.add.collider(this.opponent, cactusLayer);
+        this.physics.add.collider(this.opponent, hillssLayer);
+
         cactusLayer.setCollisionBetween(38, 39)   
         hillssLayer.setCollisionBetween(5, 50)
 
@@ -44,6 +47,9 @@ export default class SceneMain extends Phaser.Scene {
     update() {
       this.player.setVelocityY(20);
       this.player.setVelocityX(20);
+
+      this.opponent.setVelocityY(20);
+      this.opponent.setVelocityX(20);
 
        if (this.cursors.up.isDown==true)
        {
