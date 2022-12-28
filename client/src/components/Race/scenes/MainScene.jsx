@@ -29,28 +29,28 @@ export default class MainScene extends Phaser.Scene {
     this.anims.create({
       key: 'left',
       frames: this.anims.generateFrameNumbers('newt', { start: 0, end: 3 }),
-      frameRate: 10,
+      frameRate: 2000,
       repeat: -1,
     });
     this.anims.create({
       key: 'leftJump',
       frames: [{ key: 'newt', frame: 2 }],
-      frameRate: 20,
+      frameRate: 2000,
     });
     this.anims.create({
       key: 'turn',
       frames: [{ key: 'newt', frame: 4 }],
-      frameRate: 20,
+      frameRate: 2000,
     });
     this.anims.create({
       key: 'rightJump',
       frames: [{ key: 'newt', frame: 6 }],
-      frameRate: 20,
+      frameRate: 2000,
     });
     this.anims.create({
       key: 'right',
       frames: this.anims.generateFrameNumbers('newt', { start: 5, end: 8 }),
-      frameRate: 10,
+      frameRate: 2000,
       repeat: -1,
     });
     this.anims.create({
@@ -137,6 +137,7 @@ export default class MainScene extends Phaser.Scene {
 
   update() {
     //call player update
+    console.log('update')
     this.player.update(this.cursors, this.jumpSound);
   }
 }

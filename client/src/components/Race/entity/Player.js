@@ -10,7 +10,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   updateMovement(cursors) {
     // Move left
-    console.log('asdf')
     if (cursors.left.isDown) {
       this.setVelocityX(-360);
       if (this.body.touching.down) {
