@@ -10,6 +10,9 @@ function Timer() {
 
     useEffect(() => {
         socket.on("start-timer", function(time){
+            try {
+                clearInterval(timerInterval)
+            } catch {}
             console.log("starting timer")
             setTimer(time)
             timerRef.current = time
