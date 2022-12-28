@@ -124,7 +124,10 @@ def updateGame(lobbyId, source, target):
           'tar': target
           }
   print(moves)
+
   socketio.emit("get-moves", moves, room=lobbyId)
+
+  
 
 @socketio.on('end-game')
 def endGame(lobbyId):
@@ -136,6 +139,10 @@ def endGame(lobbyId):
   lobby = rooms['/'][lobbyId]             # gets current lobby from room
   print(lobby)
   socketio.emit('end-game', room=lobbyId)
+
+
+
+
 
 @app.route('/user', methods=['POST'])
 def add_User():

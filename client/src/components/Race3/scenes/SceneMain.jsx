@@ -19,8 +19,11 @@ export default class SceneMain extends Phaser.Scene {
         const hillssLayer = map.createLayer('hills', tileset, 0, 0);
 
         this.player=this.physics.add.sprite(100,100,"face");
+        //this.player=this.physics.add.sprite(100,100,"player2");
         
         Align.scaleToGameW(this.player,0.04,this);
+
+
         this.cursors=this.input.keyboard.createCursorKeys();
 
         this.physics.add.collider(this.player, cactusLayer);
@@ -37,24 +40,32 @@ export default class SceneMain extends Phaser.Scene {
 
     }
     update() {
-      this.player.setVelocityY(0);
-      this.player.setVelocityX(0);
+      this.player.setVelocityY(20);
+      this.player.setVelocityX(20);
 
        if (this.cursors.up.isDown==true)
        {
         this.player.setVelocityY(-500);
+        console.log(this.player.x)
+        console.log(this.player.y)
        }
        if (this.cursors.down.isDown==true)
        {
-         this.player.setVelocityY(100);
+         this.player.setVelocityY(500);
+         console.log(this.player.x)
+         console.log(this.player.y)
        }
         if (this.cursors.right.isDown==true)
        {
-         this.player.setVelocityX(100);
+         this.player.setVelocityX(500);
+         console.log(this.player.x)
+         console.log(this.player.y)
        }
        if (this.cursors.left.isDown==true)
        {
-         this.player.setVelocityX(-100);
+         this.player.setVelocityX(-500);
+         console.log(this.player.x)
+         console.log(this.player.y)
        }
    }
 }   
