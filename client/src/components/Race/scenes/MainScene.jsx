@@ -93,6 +93,7 @@ export default class MainScene extends Phaser.Scene {
 
     //fireflies
     this.fireflies = this.physics.add.group({ classType: Firefly });
+    console.log(this.physics)
 
     for (var i = 0; i < 30; i++) {
       let x = Phaser.Math.RND.between(0, 800);
@@ -136,8 +137,6 @@ export default class MainScene extends Phaser.Scene {
   }
 
   update() {
-    //call player update
-    console.log('update')
     this.player.update(this.cursors, this.jumpSound);
   }
 }

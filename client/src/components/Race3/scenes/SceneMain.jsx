@@ -8,6 +8,7 @@ export default class SceneMain extends Phaser.Scene {
     preload() {
       this.load.image("tiles","./assets3/tiles.png");
       this.load.image("face","./assets3/face.png");
+      this.load.image("opponent","./assets3/opponent.png");
       this.load.tilemapTiledJSON('map', "./assets3/map1.json");
 
     }
@@ -19,10 +20,11 @@ export default class SceneMain extends Phaser.Scene {
         const hillssLayer = map.createLayer('hills', tileset, 0, 0);
 
         this.player=this.physics.add.sprite(100,100,"face");
-        //this.player=this.physics.add.sprite(100,100,"player2");
+        this.opponent=this.physics.add.sprite(200,200,"opponent");
+
         
         Align.scaleToGameW(this.player,0.04,this);
-
+        Align.scaleToGameW(this.opponent,0.04,this);
 
         this.cursors=this.input.keyboard.createCursorKeys();
 
