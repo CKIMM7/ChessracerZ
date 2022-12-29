@@ -6,13 +6,14 @@ let sceneMainInstance
 
 export default class Game extends React.Component {
   constructor(props) {
+    console.log(props)
     super(props);
-    this.state = {lobbyId: props.lobbyId};
+    this.state = {lobbyId: props.lobbyId, color: props.color};
   }
   
 
   static getDerivedStateFromProps(props, state) {
-    sceneMainInstance = new SceneMain(state.lobbyId)
+    sceneMainInstance = new SceneMain(state)
     return;
   }
 

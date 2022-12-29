@@ -75,7 +75,7 @@ function Gamepage() {
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>
                     </div> 
                     <div id="race-game">
-                        <Game4 lobbyId={lobbyId}/>
+                        <Game4 lobbyId={lobbyId} color={color}/>
                     </div>
                 </main>
             </>

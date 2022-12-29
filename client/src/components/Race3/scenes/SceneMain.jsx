@@ -9,7 +9,6 @@ export default class SceneMain extends Phaser.Scene {
         super("SceneMain");
         this.lobbyId = props
         this.socket = socket
-        console.log(this)
         //this.state = {lobbyId: props};
     }
 
