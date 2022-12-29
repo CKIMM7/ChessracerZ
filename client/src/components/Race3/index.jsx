@@ -14,7 +14,7 @@ export default class Game extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     sceneMainInstance = new SceneMain(state)
-    return;
+    return sceneMainInstance;
   }
 
     componentDidMount() {

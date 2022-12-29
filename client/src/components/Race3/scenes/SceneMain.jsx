@@ -4,12 +4,14 @@ import { socket } from '../../../socket';
 
 export default class SceneMain extends Phaser.Scene {
 
-    constructor(props) {
-        console.log(props)
+    constructor(props) {  
+
         super("SceneMain");
-        this.lobbyId = props
+        this.lobbyId = props.lobbyId
         this.socket = socket
-        //this.state = {lobbyId: props};
+        this.props = props
+
+        console.log(this)
     }
 
     preload() {
@@ -29,9 +31,13 @@ export default class SceneMain extends Phaser.Scene {
         const cactusLayer = map.createLayer('cactus', tileset, 0, 0);
         const hillssLayer = map.createLayer('hills', tileset, 0, 0);
 
-        this.player=this.physics.add.sprite(100,100,"face");
-        this.opponent=this.physics.add.sprite(100,100,"opponent");
-        
+        if(this.props.color) {
+          this.player=this.physics.add.sprite(100,100,"face");
+          this.opponent=this.physics.add.sprite(100,100,"opponent");}
+
+        if(!this.props.color) {
+          this.player=this.physics.add.sprite(100,100,"opponent");
+          this.opponent=this.physics.add.sprite(100,100,"face");}
         
         Align.scaleToGameW(this.player,0.04,this);
         Align.scaleToGameW(this.opponent,0.04,this);
@@ -123,7 +129,7 @@ export default class SceneMain extends Phaser.Scene {
 
       if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y || r !== this.player.oldPosition.rotation)) {
         console.log('playerMovement in if statement')
-        console.log('send socket to server')
+        console.log('send socket to server')  
         socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
       }
 
