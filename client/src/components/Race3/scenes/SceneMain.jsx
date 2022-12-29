@@ -59,10 +59,12 @@ export default class SceneMain extends Phaser.Scene {
         this.socket.on("get-moves-race", function(moves) {
           console.log(moves.x)
           console.log(moves.y)
+          console.log(this.player)
 
-          console.log(self)
-          self.player.x = moves.x
-          self.player.y = moves.y
+          self.opponent.x = moves.x
+          self.opponent.y = moves.y
+
+
         })
 
     }
@@ -95,24 +97,41 @@ export default class SceneMain extends Phaser.Scene {
        if (this.cursors.up.isDown==true)
        {
         this.player.setVelocityY(-200);
-        socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+        //socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
        }
        if (this.cursors.down.isDown==true)
        {
          this.player.setVelocityY(200);
-         socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+         //socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
 
        }
         if (this.cursors.right.isDown==true)
        {
          this.player.setVelocityX(200);
-         socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+         //socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
 
        }
        if (this.cursors.left.isDown==true)
        {
          this.player.setVelocityX(-200);
-         socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+         //socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
        }
+
+      // emit player movement
+      let x = this.player.x;
+      let y = this.player.y;
+      let r = this.player.rotation;
+
+      if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y || r !== this.player.oldPosition.rotation)) {
+        console.log('playerMovement in if statement')
+        console.log('send socket to server')
+        socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+      }
+
+       this.player.oldPosition = {
+        x: this.player.x,
+        y: this.player.y,
+        rotation: this.player.rotation
+      };
    }
 }   
