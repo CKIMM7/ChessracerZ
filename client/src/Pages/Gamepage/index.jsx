@@ -1,11 +1,13 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useLocation } from 'react-router-dom'
 import { socket } from "../../socket"
 
 import { Header, Board, Race } from "../../components"
 
+import Game4 from "../../components/Race3"
+
 import "./gamepage.css"
-import { useEffect } from "react"
+
 
 function Gamepage() {
  
@@ -64,7 +66,6 @@ function Gamepage() {
     }, [round, lobbyId])
 
 
-    
     return<>
                 <Header />
                 <main>
@@ -74,7 +75,7 @@ function Gamepage() {
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>
                     </div> 
                     <div id="race-game">
-                        <Race />
+                        <Game4 lobbyId={lobbyId}/>
                     </div>
                 </main>
             </>

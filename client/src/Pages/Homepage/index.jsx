@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react"
+
 import { useNavigate } from 'react-router-dom'
 import { socket } from "../../socket"
+
+import { useDispatch } from "react-redux"
+import { userActions } from "../../store/store"
 
 import "./homepage.css"
 
@@ -10,6 +14,7 @@ function Homepage() {
  
     const navigate = useNavigate()
     const [lobbyId, setLobbyId] = useState("")
+    const dispatch = useDispatch()
 
     function createLobby(e) {
         e.preventDefault()
@@ -38,6 +43,7 @@ function Homepage() {
 
     function updateLobbyId(e) {
         setLobbyId(e.target.value)
+        dispatch(userActions.setLobbyId(e.target.value))
     }
 
     return<>

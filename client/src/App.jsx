@@ -1,10 +1,11 @@
 import React, { useEffect } from "react"
 import { Routes, Route } from "react-router-dom"
 import { Gamepage, Homepage } from "./Pages"
-import Game from "./components/Race"
 
-import RaceTest from "./components/Race2"
+import Game from "./components/Race"
 import Game4 from "./components/Race3"
+import RaceTest from "./components/Race2"
+
 
 function App() {
 

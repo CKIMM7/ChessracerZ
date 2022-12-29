@@ -127,7 +127,17 @@ def updateGame(lobbyId, source, target):
 
   socketio.emit("get-moves", moves, room=lobbyId)
 
-  
+@socketio.on('pass-game-race')
+def updateGameRace(lobbyId, x, y):
+  print('updatedGame-Race')
+
+  moves = {
+          'x': x,
+          'y': y
+          }
+  print(moves)
+
+  socketio.emit("get-moves-race", moves, room=lobbyId)
 
 @socketio.on('end-game')
 def endGame(lobbyId):

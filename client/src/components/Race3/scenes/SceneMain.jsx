@@ -1,18 +1,29 @@
 import Phaser from 'phaser'
 import Align from "../util/align"
+import { socket } from '../../../socket';
 
 export default class SceneMain extends Phaser.Scene {
-    constructor() {
+
+    constructor(props) {
+        console.log(props)
         super("SceneMain");
+        this.lobbyId = props
+        this.socket = socket
+        console.log(this)
+        //this.state = {lobbyId: props};
     }
+
     preload() {
       this.load.image("tiles","./assets3/tiles.png");
       this.load.image("face","./assets3/face.png");
       this.load.image("opponent","./assets3/opponent.png");
       this.load.tilemapTiledJSON('map', "./assets3/map1.json");
-
     }
-    create() {         
+
+    create() {    
+      
+        let self = this; 
+
         const map = this.make.tilemap({ key: "map", tileWidth: 64, tileHeight: 64});
         const tileset = map.addTilesetImage('tiles1','tiles');
         const layer = map.createLayer('ground', tileset, 0, 0);
@@ -20,8 +31,8 @@ export default class SceneMain extends Phaser.Scene {
         const hillssLayer = map.createLayer('hills', tileset, 0, 0);
 
         this.player=this.physics.add.sprite(100,100,"face");
-        this.opponent=this.physics.add.sprite(200,200,"opponent");
-
+        this.opponent=this.physics.add.sprite(100,100,"opponent");
+        
         
         Align.scaleToGameW(this.player,0.04,this);
         Align.scaleToGameW(this.opponent,0.04,this);
@@ -34,6 +45,8 @@ export default class SceneMain extends Phaser.Scene {
         this.physics.add.collider(this.opponent, cactusLayer);
         this.physics.add.collider(this.opponent, hillssLayer);
 
+        this.physics.add.collider(this.player, this.opponent);
+
         cactusLayer.setCollisionBetween(38, 39)   
         hillssLayer.setCollisionBetween(5, 50)
 
@@ -41,39 +54,65 @@ export default class SceneMain extends Phaser.Scene {
         //hillssLayer.setCollisionBetween(138, 157)   
         
         //corner walls
-        hillssLayer.setCollisionBetween(137, 158)  
+        hillssLayer.setCollisionBetween(137, 158)
+        
+        this.socket.on("get-moves-race", function(moves) {
+          console.log(moves.x)
+          console.log(moves.y)
+
+          console.log(self)
+          self.player.x = moves.x
+          self.player.y = moves.y
+        })
 
     }
-    update() {
-      this.player.setVelocityY(20);
-      this.player.setVelocityX(20);
 
-      this.opponent.setVelocityY(20);
-      this.opponent.setVelocityX(20);
+    update() {
+
+      //this.player.setVelocityY(20);
+      //this.player.setVelocityX(20);
+
+      //send my moves to the opponent and move the opp
+
+      //socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+
+      //   socket.on("get-moves-race", function(moves){
+      //     console.log(moves.x)
+      //     console.log(moves.y)
+      //     console.log(x)
+      //     x = 500
+      // })
+
+      // this.opponent.x += 5;
+
+      // if (this.opponent.x > 950)
+      // {
+      //   this.opponent.x = 150;
+      // }
+
+      //console.log('fast')
 
        if (this.cursors.up.isDown==true)
        {
-        this.player.setVelocityY(-500);
-        console.log(this.player.x)
-        console.log(this.player.y)
+        this.player.setVelocityY(-200);
+        socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
        }
        if (this.cursors.down.isDown==true)
        {
-         this.player.setVelocityY(500);
-         console.log(this.player.x)
-         console.log(this.player.y)
+         this.player.setVelocityY(200);
+         socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+
        }
         if (this.cursors.right.isDown==true)
        {
-         this.player.setVelocityX(500);
-         console.log(this.player.x)
-         console.log(this.player.y)
+         this.player.setVelocityX(200);
+         socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+
        }
        if (this.cursors.left.isDown==true)
        {
-         this.player.setVelocityX(-500);
-         console.log(this.player.x)
-         console.log(this.player.y)
+         this.player.setVelocityX(-200);
+         socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
        }
    }
 }   

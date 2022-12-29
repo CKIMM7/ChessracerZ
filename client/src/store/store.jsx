@@ -13,12 +13,15 @@ const userSlice = createSlice({
         user: '',
         iAmId: '',
         instanceId: '',
-        game: new Chess()
+        lobbyId: '',
     },
 
     reducers: {
 
-
+        setLobbyId(state, action) {
+            state.lobbyId = action.payload
+            console.log(state.lobbyId)
+        },
 
         setUser(state, action) {
             console.log(action.payload)
