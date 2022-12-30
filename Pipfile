@@ -13,7 +13,7 @@ flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 python-dotenv = "*"
 flask-socketio = "*"
-eventlet = "*"
+eventlet = "==0.33.0"
 
 [dev-packages]
 
