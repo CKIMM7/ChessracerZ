@@ -16,7 +16,10 @@ import os
 
 
 app = Flask(__name__)
+
+# Init socket
 app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app, cors_allowed_origins='*')
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 # load_dotenv(dotenv_path='.env', verbose=True)
@@ -29,8 +32,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
 db = SQLAlchemy(app)
 
-# Init db
-socketio = SocketIO(app, cors_allowed_origins='*')
+
 
 # Init ma
 ma = Marshmallow(app)
