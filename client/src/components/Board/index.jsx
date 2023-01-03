@@ -8,7 +8,6 @@ import "./board.css"
 
 const Board = ({ lobbyId, color, draggable }) =>{
     const [game, setGame] = useState(new Chess());
-    const navigate = useNavigate()
 
     if (!color) color ='b'
 
