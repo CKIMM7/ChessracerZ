@@ -1,7 +1,0 @@
-    # ec2 = boto3.resource('ec2',
-    #      aws_access_key_id='AKIAUCXTXAAIXQCVARSC',
-    #      aws_secret_access_key='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',
-    #      region_name='eu-west-2')
-    
-    # for instance in ec2.instances.all():
-    #     print(instance)
