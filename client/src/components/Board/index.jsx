@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Chessboard } from 'react-chessboard'
 import { Chess } from 'chess.js'
 import { socket } from '../../socket'
@@ -96,6 +95,8 @@ const Board = ({ lobbyId, color, draggable}) =>{
 //             }
 //         })
 //   }
+
+    const navigate = useNavigate()
 
     socket.on("send-to-home", () => {
         navigate("/")

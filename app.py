@@ -103,27 +103,34 @@ def join_lobby(lobbyId):
         socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
         socketio.emit("send-to-game", room=request.sid)
         socketio.sleep(1)
-        socketio.emit("start-game", room=lobbyId)
         socketio.emit("console-message", f"game starting...", room=lobbyId)
+        socketio.emit("start-game", room=lobbyId)
         startTimer(lobbyId)
 
 def startTimer(lobbyId):
-  print("starting timer")
-  socketio.sleep(23)
-  print("timer finished")
+  socketio.sleep(3)
+  print(f"Lobby {lobbyId}: Starting timer")
+  time = 21
+  socketio.emit("start-timer", time ,room=lobbyId)
+  socketio.sleep(time)
+  print(f"Lobby {lobbyId}: Timer finished")
   socketio.emit("timer-end", room=lobbyId)
-  startTimer(lobbyId)
+  try:
+    lobby = socketio.server.manager.rooms['/'][lobbyId]
+    startTimer(lobbyId)
+  except:
+    print(f"Lobby {lobbyId}: Timer finished lobby closed")
 
 @socketio.on('pass-game')
 def updateGame(lobbyId, source, target):
-  print('updatedGame')
+  print(f"Lobby {lobbyId}: updatedGame")
 
   moves = {
           'src': source,
           'tar': target
           }
-  print(moves)
 
+  print(f"Lobby {lobbyId}: {moves}")
   socketio.emit("get-moves", moves, room=lobbyId)
 
 @socketio.on('pass-game-race')
