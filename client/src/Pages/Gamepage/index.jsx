@@ -57,10 +57,10 @@ function Gamepage() {
 
         if (round === 0 || round % 2 === 0) {
             document.getElementById("chess-game").style.display = "flex"
-            document.getElementById("race-game").style.display = "none"
+            document.querySelector("canvas").style.display = "none"
         } else {
             document.getElementById("chess-game").style.display = "none"
-            document.getElementById("race-game").style.display = "flex"
+            document.querySelector("canvas").style.display = "flex"
         }
 
     }, [round, lobbyId])
