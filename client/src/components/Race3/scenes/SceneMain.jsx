@@ -137,24 +137,6 @@ export default class SceneMain extends Phaser.Scene {
 
       if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y || r !== this.player.oldPosition.rotation)) {
 
-        // if (this.player.x > 150 && this.player.x < 250 && this.player.y > 150 && this.player.y < 215) {
-        //   //will execute many times
-        //   console.log('player has crossed lap1')
-        //   this.lap1 = true;
-          
-
-        //   if(this.lap1 == true && this.lapCount == 0) {
-        //     this.lapCount += 1
-        //     this.lap1 = false
-        //   }}
-
-        // this.lapCount = 0
-        // this.lineStart = false
-        // this.lineFinish = false
-        // this.lap = false
-
-        console.log(`x: ${this.player.x} y: ${this.player.y} lap: ${this.player.lap}`)
-
         if(this.player.y < 180 && this.player.y > 140 && this.player.x > 370 && 380 > this.player.x) {
           this.lineStart = true
           console.log('this.lineStart')
