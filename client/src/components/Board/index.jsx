@@ -6,9 +6,8 @@ import { useNavigate } from 'react-router-dom'
 
 import "./board.css"
 
-const Board = ({ lobbyId, color, draggable}) =>{
+const Board = ({ lobbyId, color, draggable }) =>{
     const [game, setGame] = useState(new Chess());
-    const navigate = useNavigate()
 
     if (!color) color ='b'
 
@@ -95,8 +94,6 @@ const Board = ({ lobbyId, color, draggable}) =>{
 //             }
 //         })
 //   }
-
-    const navigate = useNavigate()
 
     socket.on("send-to-home", () => {
         navigate("/")

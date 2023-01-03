@@ -15,7 +15,6 @@ function Gamepage() {
     const [draggable, setDraggable] = useState(false)
     const [round, setRound] = useState(1)
 
-
     const { state } = useLocation()
     const { lobbyId, color } = state
 
@@ -28,7 +27,11 @@ function Gamepage() {
                 socket.emit("start-game", lobbyId)
             }
         })
-            
+    
+        socket.on("timer-end", () => {
+            console.log("end")
+        })
+    
         socket.on("start-game", function() {
             let countdown = 4
     
@@ -47,28 +50,31 @@ function Gamepage() {
 
         
         socket.on("timer-end", function() {
+            console.log("Timer ended for round ", round)
             setRound(round + 1)
 
             let countdown = 4
+            setWaitMessage(`Round ${round+1} \n\n starting in ... seconds...`)
             document.getElementById("waiting").style.display = "flex"
             const countdownInterval = setInterval(function() {
                 countdown--;
-                setWaitMessage(`Game starting in ${countdown} seconds...`)
+                setWaitMessage(`Round ${round+1} \n\n starting in ${countdown} seconds...`)
                 if (countdown === 0) {
                   clearInterval(countdownInterval)
                   document.getElementById("waiting").style.display = "none"
                   setDraggable(true)
                 }
             }, 1000);
+
         })
 
-        if (round === 1 || round % 2 === 1) {
+        if (round === 0 || round % 2 === 0) {
             document.getElementById("chess-game").style.display = "flex"
-            document.querySelector("canvas").style.display = "none"
+            document.getElementById("race-game").style.display = "none"
         } else {
-            document.getElementById("chess-game").style.display = "none"
-            document.querySelector("canvas").style.display = "flex"
             setDraggable(false)
+            document.getElementById("chess-game").style.display = "none"
+            document.querySelector("race-game").style.display = "flex"
         }
 
     }, [round, lobbyId])
@@ -77,9 +83,7 @@ function Gamepage() {
     return<>
                 <Header />
                 <main>
-                    <Timer />
                     <p>Lobby: {lobbyId}</p>
-                    <p>Round: {round}</p>
                     <div id="waiting">{waitMessage}</div>
                     <div id="chess-game">
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>

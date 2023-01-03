@@ -6,18 +6,24 @@ let sceneMainInstance
 
 export default class Game extends React.Component {
   constructor(props) {
-    console.log(props)
-    super(props);
-    this.state = {lobbyId: props.lobbyId, color: props.color};
-  }
   
+    super(props);
+    this.state = { lobbyId: props.lobbyId, color: props.color, round: props.round };
+
+    console.log('reconstructed')
+    console.log(this.state.updatePhaser)
+
+  }
+
 
   static getDerivedStateFromProps(props, state) {
+
     sceneMainInstance = new SceneMain(state)
     return sceneMainInstance;
   }
 
     componentDidMount() {
+
         const config = {
             type: Phaser.AUTO,
             parent: 'phaser-example',
@@ -34,10 +40,11 @@ export default class Game extends React.Component {
         };
       new Phaser.Game(config);
     }
-    shouldComponentUpdate() {
-      return false;
-    }
+    
+
     render() {
-      return <div id="phaser-game" lobbyid={this.state.lobbyId}/>;
+      return <>
+      <div id="phaser-game" lobbyid={this.state.lobbyId}/>
+      </>;
     }
   }
