@@ -86,19 +86,6 @@ export default class SceneMain extends Phaser.Scene {
 
           if(moves.player_lap == 2) document.querySelector("canvas").remove()
 
-        //   if(moves.player_lap == 2) {
-        //   console.log('lap2')
-        //   document.querySelector("canvas").style.display = "none"
-        // }
-          
-        //remove()
-        //   if(this.opponent.lap == 1) {
-        //     console.log('game ends do something')
-        //     this.socket.emit("end-game", this.lobbyId)
-    
-        //     document.querySelector("canvas").style.display = "none"
-        // }
-
           console.log(self.opponent.lap)
         })
 
