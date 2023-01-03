@@ -25,21 +25,20 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    },   
+    },
     "transformIgnorePatterns": [
       "node_modules/(?!chess.js)"
     ],
     "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/actions/"
+      "/node_modules/"
     ],
     "testEnvironment": "jsdom"
-
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --watch --silent --setupFilesAfterEnv ./test/setupTests.js",
+    "test": "jest --watch --silent --setupFilesAfterEnv ./test/setupTests.js --verbose false",
+    "coverage": "jest --coverage --setupFilesAfterEnv ./test/setupTests.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -76,6 +75,7 @@
     "css-loader": "^6.7.2",
     "jest": "^27.5.1",
     "jest-environment-jsdom": "^27.5.1",
+    "socket.io": "^4.5.4",
     "style-loader": "^3.3.1"
   }
 }
