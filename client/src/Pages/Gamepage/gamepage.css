@@ -1,0 +1,24 @@
+div#chess-game {
+    text-align: center;
+}
+
+div#chess-game {
+    text-align: center;
+}
+
+div#waiting {
+    position: absolute;
+    top: 50vh;
+    /* left: 50%; */
+    width: 200px;
+    height: 100px;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    z-index: 1;
+}
+
+svg {
+    /* transform: rotate(3.142rad); */
+}
