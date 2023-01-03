@@ -50,10 +50,11 @@ function Gamepage() {
             setRound(round + 1)
 
             let countdown = 4
+            setWaitMessage(`Round ${round+1} \n\n starting in ... seconds...`)
             document.getElementById("waiting").style.display = "flex"
             const countdownInterval = setInterval(function() {
                 countdown--;
-                setWaitMessage(`Game starting in ${countdown} seconds...`)
+                setWaitMessage(`Round ${round+1} \n\n starting in ${countdown} seconds...`)
                 if (countdown === 0) {
                   clearInterval(countdownInterval)
                   document.getElementById("waiting").style.display = "none"
@@ -66,9 +67,9 @@ function Gamepage() {
             document.getElementById("chess-game").style.display = "flex"
             document.querySelector("canvas").style.display = "none"
         } else {
+            setDraggable(false)
             document.getElementById("chess-game").style.display = "none"
             document.querySelector("canvas").style.display = "flex"
-            setDraggable(false)
         }
 
     }, [round, lobbyId])
