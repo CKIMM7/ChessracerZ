@@ -10,10 +10,7 @@ from werkzeug import exceptions
 from subprocess import Popen
 import pathlib
 import hellopy
-# import boto3
-
 import os
-# from dotenv import load_dotenv
 
 
 app = Flask(__name__)
@@ -32,7 +29,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
 db = SQLAlchemy(app)
-
 
 
 # Init ma
@@ -114,7 +110,7 @@ def join_lobby(lobbyId):
 def startTimer(lobbyId):
   socketio.sleep(3)
   print(f"Lobby {lobbyId}: Starting timer")
-  time = 21
+  time = 10
   socketio.emit("start-timer", time ,room=lobbyId)
   socketio.sleep(time)
   print(f"Lobby {lobbyId}: Timer finished")
@@ -138,16 +134,24 @@ def updateGame(lobbyId, source, target):
   socketio.emit("get-moves", moves, room=lobbyId)
 
 @socketio.on('pass-game-race')
-def updateGameRace(lobbyId, x, y):
+def updateGameRace(lobbyId, x, y, player_lap):
   print('updatedGame-Race')
+  print(f"----------{player_lap}----------------")
 
   moves = {
           'x': x,
           'y': y
           }
+  #player_lap = player_lap
+
   print(moves)
+  if(player_lap):
+      moves['player_lap'] = player_lap
+      socketio.emit("get-moves-race", moves, room=lobbyId)
 
   socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
+
+
 
 @socketio.on('end-game')
 def endGame(lobbyId):
