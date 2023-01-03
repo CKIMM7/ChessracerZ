@@ -3,6 +3,7 @@ from flask_cors import CORS
 
 from flask_sqlalchemy import SQLAlchemy 
 from flask_marshmallow import Marshmallow
+
 from flask_socketio import SocketIO, join_room, leave_room, emit, send
 
 from werkzeug import exceptions
@@ -16,7 +17,10 @@ import os
 
 
 app = Flask(__name__)
+
+# Init socket
 app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app, cors_allowed_origins='*')
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 # load_dotenv(dotenv_path='.env', verbose=True)
@@ -29,8 +33,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
 db = SQLAlchemy(app)
 
-# Init db
-socketio = SocketIO(app, cors_allowed_origins='*')
+
 
 # Init ma
 ma = Marshmallow(app)
@@ -130,8 +133,21 @@ def updateGame(lobbyId, source, target):
           'src': source,
           'tar': target
           }
+
   print(f"Lobby {lobbyId}: {moves}")
   socketio.emit("get-moves", moves, room=lobbyId)
+
+@socketio.on('pass-game-race')
+def updateGameRace(lobbyId, x, y):
+  print('updatedGame-Race')
+
+  moves = {
+          'x': x,
+          'y': y
+          }
+  print(moves)
+
+  socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
 
 @socketio.on('end-game')
 def endGame(lobbyId):
@@ -143,6 +159,10 @@ def endGame(lobbyId):
   lobby = rooms['/'][lobbyId]             # gets current lobby from room
   print(lobby)
   socketio.emit('end-game', room=lobbyId)
+
+
+
+
 
 @app.route('/user', methods=['POST'])
 def add_User():

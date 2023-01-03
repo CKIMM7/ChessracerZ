@@ -1,11 +1,13 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useLocation } from 'react-router-dom'
 import { socket } from "../../socket"
 
 import { Header, Board, Race, Timer } from "../../components"
 
+import Game4 from "../../components/Race3"
+
 import "./gamepage.css"
-import { useEffect } from "react"
+
 
 function Gamepage() {
  
@@ -62,17 +64,16 @@ function Gamepage() {
 
         if (round === 1 || round % 2 === 1) {
             document.getElementById("chess-game").style.display = "flex"
-            document.getElementById("race-game").style.display = "none"
+            document.querySelector("canvas").style.display = "none"
         } else {
             document.getElementById("chess-game").style.display = "none"
+            document.querySelector("canvas").style.display = "flex"
             setDraggable(false)
-            document.getElementById("race-game").style.display = "flex"
         }
 
     }, [round, lobbyId])
 
 
-    
     return<>
                 <Header />
                 <main>
@@ -84,7 +85,7 @@ function Gamepage() {
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>
                     </div> 
                     <div id="race-game">
-                        <Race />
+                        <Game4 lobbyId={lobbyId} color={color}/>
                     </div>
                 </main>
             </>
