@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useLocation } from 'react-router-dom'
 import { socket } from "../../socket"
 
-import { Header, Board, Race, timer } from "../../components"
+import { Header, Board, Race, Timer } from "../../components"
 
 import Game4 from "../../components/Race3"
 
@@ -17,10 +17,6 @@ function Gamepage() {
 
     const { state } = useLocation()
     const { lobbyId, color } = state
-
-    const updatePhaser = () => {
-
-    }
 
 
     useEffect(() => {
@@ -78,8 +74,7 @@ function Gamepage() {
         } else {
             setDraggable(false)
             document.getElementById("chess-game").style.display = "none"
-
-            document.querySelector("canvas").style.display = "flex"
+            document.querySelector("race-game").style.display = "flex"
         }
 
     }, [round, lobbyId])
@@ -94,7 +89,7 @@ function Gamepage() {
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>
                     </div> 
                     <div id="race-game">
-                        <Game4 lobbyId={lobbyId} color={color} round={round}/>
+                        <Game4 lobbyId={lobbyId} color={color}/>
                     </div>
                 </main>
             </>

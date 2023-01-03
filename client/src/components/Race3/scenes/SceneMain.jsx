@@ -16,7 +16,6 @@ export default class SceneMain extends Phaser.Scene {
         this.lap = false
         this.velocity = 500
 
-        console.log(this)
     }
 
     preload() {
@@ -74,22 +73,26 @@ export default class SceneMain extends Phaser.Scene {
         console.log(tileset)
         console.log(this)
 
-
         this.socket.on("get-moves-race", function(moves) {
-          console.log(moves.x)
-          console.log(moves.y)
-          console.log(moves)
 
           self.opponent.x = moves.x
           self.opponent.y = moves.y
           if(moves.player_lap) self.opponent.lap = moves.player_lap
 
-          if(self.opponent.lap == 2 || self.player.lap ==2) document.querySelector("canvas").style.display = "none"
-
+          if(self.opponent.lap == 2 || self.player.lap ==2) 
           console.log(self.opponent.lap)
         })
 
-    }
+        this.socket.on("timer-end", function() {
+          self.opponent.x = 500;
+          self.opponent.y = 150;
+
+          self.player.x = 500;
+          self.player.y = 150;
+
+          self.opponent.lap = 0;
+          self.player.lap = 0;
+        })}
 
     update() {
 

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import "./board.css"
 
-const Board = ({ lobbyId, color, draggable}) =>{
+const Board = ({ lobbyId, color, draggable }) =>{
     const [game, setGame] = useState(new Chess());
     console.log(game)
     const [gameState, setGameState] = useState('Player 1')
