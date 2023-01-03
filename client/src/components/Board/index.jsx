@@ -8,6 +8,8 @@ import "./board.css"
 
 const Board = ({ lobbyId, color, draggable }) =>{
     const [game, setGame] = useState(new Chess());
+    console.log(game)
+    const [gameState, setGameState] = useState('Player 1')
 
     if (!color) color ='b'
 
@@ -53,9 +55,7 @@ const Board = ({ lobbyId, color, draggable }) =>{
     function onOpponentDrop(source,target, arg=null, updateOpponent=null){
 
       if(game.turn() === color) return;
-
       let move = null;
-
       safeGameMutate(
         
         (game)=>{
@@ -64,8 +64,37 @@ const Board = ({ lobbyId, color, draggable }) =>{
           to: target,
           promotion:'q'
        })
+       
+      // document.getElementById('winner').style.display = 'none'
+       
        if(game.in_checkmate()){
             socket.emit("end-game", lobbyId)
+            setGameState('Player x has won the game via checkmate')
+            document.getElementById('gameEnding').style.display = 'flex'
+       }
+
+       if(game.in_draw()){
+        socket.emit('end-game', lobbyId)
+        setGameState('This game has ended in a draw')
+        document.getElementById('gameEnding').style.display = 'flex'
+       }
+
+       if(game.in_stalemate()){
+        socket.emit('end-game', lobbyId)
+        setGameState('This game has ended in a stalemate')
+        document.getElementById('gameEnding').style.display = 'flex'
+       }
+       
+       if(game.insufficient_material()){
+        socket.emit('end-game', lobbyId)
+        setGameState('This game has ended due to a lack of material')
+        document.getElementById('gameEnding').style.display = 'flex'
+       }
+
+       if(game.in_threefold_repetition()){
+        socket.emit('end-game', lobbyId)
+        setGameState('This game has ended due to repetition of moves')
+        document.getElementById('gameEnding').style.display = 'flex'
        }
     }
   )
@@ -84,17 +113,6 @@ const Board = ({ lobbyId, color, draggable }) =>{
   })
   }, [])
 
-//   function checkmate(){
-//         // game.on('checkmate', (attack)=>{
-//         //     console.log('You won with ' + attack)
-//         // })
-//         safeGameMutate((game) =>{
-//             if(game.checkmate()){
-//                 socket.emit("pass-game", lobbyId, source, target)
-//             }
-//         })
-//   }
-
     socket.on("send-to-home", () => {
         navigate("/")
     })
@@ -106,6 +124,7 @@ const Board = ({ lobbyId, color, draggable }) =>{
       boardOrientation={color == 'w' ? 'white' : 'black'}
       arePiecesDraggable = {draggable}
       />
+      <div id="gameEnding">{gameState}</div>
     </div>
   );
 }
