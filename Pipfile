@@ -7,12 +7,13 @@ name = "pypi"
 flask = "*"
 flask-cors = "*"
 boto3 = "*"
-gunicorn = "*"
+gunicorn = "==20.1.0"
 waitress = "*"
 flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 python-dotenv = "*"
 flask-socketio = "*"
+eventlet = "==0.30.2"
 
 [dev-packages]
 
@@ -22,6 +23,6 @@ python_version = "*"
 [scripts]
 dev = "flask run"
 start = "gunicorn app:app"
-waitress = "waitress-serve --host 127.0.0.1:8080 app:app"
+waitress = "waitress-serve --host 127.0.0.1:5000 app:app"
 test = "pytest ."
 coverage = "pytest --cov-report term-missing --cov=."
