@@ -56,15 +56,30 @@ function Gamepage() {
         socket.on("timer-end", function() {
             console.log("Timer ended for round ", round)
             setRound(round + 1)
-            console.log("Starting round ", round)
+
+            let countdown = 4
+            setWaitMessage(`Round ${round+1} \n\n starting in ... seconds...`)
+            document.getElementById("waiting").style.display = "flex"
+            const countdownInterval = setInterval(function() {
+                countdown--;
+                setWaitMessage(`Round ${round+1} \n\n starting in ${countdown} seconds...`)
+                if (countdown === 0) {
+                  clearInterval(countdownInterval)
+                  document.getElementById("waiting").style.display = "none"
+                  setDraggable(true)
+                }
+            }, 1000);
+
         })
 
         if (round === 0 || round % 2 === 0) {
             document.getElementById("chess-game").style.display = "flex"
             document.getElementById("race-game").style.display = "none"
         } else {
+            setDraggable(false)
             document.getElementById("chess-game").style.display = "none"
-            //document.getElementById("race-game").style.display = "flex"
+
+            document.querySelector("canvas").style.display = "flex"
         }
 
     }, [round, lobbyId])
