@@ -95,8 +95,6 @@ const Board = ({ lobbyId, color, draggable}) =>{
 //         })
 //   }
 
-    const navigate = useNavigate()
-
     socket.on("send-to-home", () => {
         navigate("/")
     })

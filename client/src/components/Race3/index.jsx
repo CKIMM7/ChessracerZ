@@ -8,7 +8,7 @@ export default class Game extends React.Component {
   constructor(props) {
     console.log(props)
     super(props);
-    this.state = {lobbyId: props.lobbyId, color: props.color};
+    this.state = {lobbyId: props.lobbyId, color: props.color, round: props.round};
   }
   
 
@@ -34,9 +34,16 @@ export default class Game extends React.Component {
         };
       new Phaser.Game(config);
     }
-    shouldComponentUpdate() {
-      return false;
-    }
+
+    // changeRound = (props) => {
+    //   this.setState({round: props.round});
+    // }
+
+
+    // shouldComponentUpdate() {
+    //   return false;
+    // }
+
     render() {
       return <div id="phaser-game" lobbyid={this.state.lobbyId}/>;
     }
