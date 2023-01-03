@@ -16,13 +16,13 @@ describe('Homepage', () =>{
     })
 
     test('Title can be seen', () =>{
-        const title = screen.getByRole('heading', { level: '1'})
-        expect(username).toBeInTheDocument()
+        const title = screen.getByRole('heading', { name: 'ChessRacerZ'})
+        expect(title).toBeInTheDocument()
     })
 
     test('Logo is displayed', () =>{
-        const title = screen.getByRole('img', { name: 'ChessRacerZLogo'})
-        expect(username).toBeInTheDocument()
+        const logo = screen.getByRole('img', { name: 'Logo'})
+        expect(logo).toBeInTheDocument()
     })
 
 

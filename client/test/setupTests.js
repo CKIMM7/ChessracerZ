@@ -1,4 +1,5 @@
 import React from 'react'
+import "core-js"
 
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
