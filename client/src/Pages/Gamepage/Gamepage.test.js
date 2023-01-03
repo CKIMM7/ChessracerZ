@@ -9,10 +9,8 @@ jest.mock("react-router-dom", () => ({
     useNavigate: jest.fn(),
     useLocation: jest.fn()
   }));
-  
+
 describe('Gamepage', () =>{
-
-
 
     beforeEach(() =>{
         useLocation.mockReturnValue( {state: {
@@ -28,4 +26,23 @@ describe('Gamepage', () =>{
 
         expect(header).toBeInTheDocument()
     })
+
+    test('Timer displayed on page', () =>{
+        const timer = screen.getByText('0 : 0')
+
+        expect(timer).toBeInTheDocument()
+    })
+
+    test('Lobby name correctly displayed on page', () =>{
+        const lobbyIdText = screen.getByText("Lobby: TestLobby") 
+
+        expect(lobbyIdText).toBeInTheDocument()
+    })
+    
+    test('Displays waiting on opponent message', () =>{
+        const waiting = screen.getByText("Waiting on opponent...") 
+
+        expect(waiting).toBeInTheDocument()
+    })
+
 })
