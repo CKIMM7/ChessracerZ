@@ -84,7 +84,7 @@ export default class SceneMain extends Phaser.Scene {
           self.opponent.y = moves.y
           if(moves.player_lap) self.opponent.lap = moves.player_lap
 
-          if(moves.player_lap == 2) document.querySelector("canvas").remove()
+          if(self.opponent.lap == 2 || self.player.lap ==2) document.querySelector("canvas").style.display = "none"
 
           console.log(self.opponent.lap)
         })
