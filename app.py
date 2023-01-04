@@ -90,6 +90,7 @@ def create_lobby(lobbyId):
 
 @socketio.on('join-lobby')
 def join_lobby(lobbyId):
+
   lobby = ""
   print(lobbyId)
   try:
@@ -109,12 +110,10 @@ def join_lobby(lobbyId):
   except:
       socketio.emit("display-message", "Lobby doesn't exist")
 
-
-
 def startTimer(lobbyId):
   socketio.sleep(3)
   print(f"Lobby {lobbyId}: Starting timer")
-  time = 31
+  time = 8
   socketio.emit("start-timer", time ,room=lobbyId)
   socketio.sleep(time)
   print(f"Lobby {lobbyId}: Timer finished")

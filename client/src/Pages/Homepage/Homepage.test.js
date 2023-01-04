@@ -3,14 +3,7 @@ import Homepage from '.'
 import {BrowserRouter as Router} from 'react-router-dom';
 import React from 'react'
 import '@testing-library/jest-dom'
-import { afterAll, beforeAll } from '@jest/globals';
 import { socket } from "../../socket"
-
-const io = require('socket.io')(2333, {
-    cors: {
-        origin: ["*"]
-    }
-})
 
 describe('Homepage', () =>{
 
@@ -26,10 +19,6 @@ describe('Homepage', () =>{
 
     beforeEach(() =>{
         render(<Homepage />, { wrapper: Router } )
-    })
-
-    afterAll(() => {
-        io.close()
     })
 
     test('Create lobby button exists', () =>{
@@ -81,10 +70,12 @@ describe('Homepage', () =>{
         const navigateMock = jest.fn()
         const navigate = navigateMock
 
-        io.on("connection", socket => {
-            socket.emit("send-to-game")
-        })
+        socket.emit("send-to-game", "w")
 
+        const onMock = jest.fn()
+        socket.on = onMock
+
+        expect(socket.on).toHaveBeenCalledWith("send-to-game", expect.any(Function));
         expect(navigate).toHaveBeenCalledWith("/game", {
             state: { lobbyId: "", color: "w" },
         })
