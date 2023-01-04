@@ -68,13 +68,13 @@ function Gamepage() {
 
         })
 
-        if (round === 0 || round % 2 === 0) {
+        if (round === 1 || round % 2 === 1) {
             document.getElementById("chess-game").style.display = "flex"
-            document.getElementById("race-game").style.display = "none"
+            document.querySelector("canvas").style.display = "none"
         } else {
             setDraggable(false)
             document.getElementById("chess-game").style.display = "none"
-            document.querySelector("race-game").style.display = "flex"
+            document.querySelector("canvas").style.display = "flex"
         }
 
     }, [round, lobbyId])
