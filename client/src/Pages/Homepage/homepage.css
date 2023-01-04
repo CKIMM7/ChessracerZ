@@ -46,3 +46,9 @@ main div#lobbyOptions input {
     font-size: 3vh;
     text-align: center;
 }
+
+p#displayMessage {
+    color: darkred;
+    font-weight: 700;
+    margin: 0px
+}
