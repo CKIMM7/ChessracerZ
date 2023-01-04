@@ -94,22 +94,24 @@ def create_lobby(lobbyId):
 
 @socketio.on('join-lobby')
 def join_lobby(lobbyId):
-
-    rooms = socketio.server.manager.rooms   # gets all rooms
-    lobby = rooms['/'][lobbyId]             # gets current lobby from room
-
-    if (not lobby):
-        socketio.emit("console-message", "Lobby doesn't exist")
-    elif (len(lobby) >= 2):
-        socketio.emit("console-message", "Lobby is already full")
-    else:
-        join_room(lobbyId)
-        socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
-        socketio.emit("send-to-game", room=request.sid)
-        socketio.sleep(1)
-        socketio.emit("console-message", f"game starting...", room=lobbyId)
-        socketio.emit("start-game", room=lobbyId)
-        startTimer(lobbyId)
+    lobby = ""
+  
+    try:
+      rooms = socketio.server.manager.rooms   # gets all rooms
+      lobby = rooms['/'][lobbyId]             # gets current lobby from room
+    except:
+      if (not lobby):
+          socketio.emit("console-message", "Lobby doesn't exist")
+      elif (len(lobby) >= 2):
+          socketio.emit("console-message", "Lobby is already full")
+      else:
+          join_room(lobbyId)
+          socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
+          socketio.emit("send-to-game", room=request.sid)
+          socketio.sleep(1)
+          socketio.emit("console-message", f"game starting...", room=lobbyId)
+          socketio.emit("start-game", room=lobbyId)
+          startTimer(lobbyId)
 
 def startTimer(lobbyId):
   socketio.sleep(3)

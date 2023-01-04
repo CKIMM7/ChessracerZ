@@ -16,6 +16,7 @@ flask-socketio = "*"
 eventlet = "*"
 marshmallow-sqlalchemy = "*"
 pytest = "*"
+pytest-cov = "*"
 
 [dev-packages]
 
@@ -27,4 +28,4 @@ dev = "flask run"
 start = "gunicorn app:app"
 waitress = "waitress-serve --host 127.0.0.1:5000 app:app"
 test = "python -m pytest"
-coverage = "pytest --cov-report term-missing --cov=."
+coverage = "python -m pytest --cov=app tests"
