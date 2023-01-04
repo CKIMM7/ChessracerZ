@@ -15,6 +15,7 @@ function Gamepage() {
     const [draggable, setDraggable] = useState(false)
     const [round, setRound] = useState(1)
 
+
     const { state } = useLocation()
     const { lobbyId, color } = state
 
@@ -27,11 +28,7 @@ function Gamepage() {
                 socket.emit("start-game", lobbyId)
             }
         })
-    
-        socket.on("timer-end", () => {
-            console.log("end")
-        })
-    
+            
         socket.on("start-game", function() {
             let countdown = 4
     
@@ -50,7 +47,6 @@ function Gamepage() {
 
         
         socket.on("timer-end", function() {
-            console.log("Timer ended for round ", round)
             setRound(round + 1)
 
             let countdown = 4
@@ -65,10 +61,10 @@ function Gamepage() {
                   setDraggable(true)
                 }
             }, 1000);
-
         })
 
         if (round === 1 || round % 2 === 1) {
+            setDraggable(false)
             document.getElementById("chess-game").style.display = "flex"
             document.querySelector("canvas").style.display = "none"
         } else {
@@ -83,7 +79,9 @@ function Gamepage() {
     return<>
                 <Header />
                 <main>
-                    <p>Lobby: {lobbyId}</p>
+                    <Timer />
+                    {/* <p>Lobby: {lobbyId}</p> */}
+                    {/* <p>Round: {round}</p> */}
                     <div id="waiting">{waitMessage}</div>
                     <div id="chess-game">
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>

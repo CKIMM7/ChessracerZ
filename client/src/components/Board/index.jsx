@@ -9,7 +9,6 @@ import "./board.css"
 const Board = ({ lobbyId, color, draggable }) =>{
     const [game, setGame] = useState(new Chess());
     const [gameState, setGameState] = useState('Player 1')
-    const navigate = useNavigate();
 
     if (!color) color ='b'
 
@@ -69,7 +68,11 @@ const Board = ({ lobbyId, color, draggable }) =>{
        
        if(game.in_checkmate()){
             socket.emit("end-game", lobbyId)
-            setGameState('Player x has won the game via checkmate')
+            if(game.turn() == 'b'){
+            setGameState('White has won the game via checkmate')
+            } else {
+            setGameState('Black has won the game via checkmate')
+            }
             document.getElementById('gameEnding').style.display = 'flex'
        }
 
@@ -113,9 +116,12 @@ const Board = ({ lobbyId, color, draggable }) =>{
   })
   }, [])
 
+    const navigate = useNavigate()
+
     socket.on("send-to-home", () => {
         navigate("/")
     })
+
   return (
     <div className="app">
       <Chessboard 

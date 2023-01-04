@@ -80,7 +80,7 @@ def on_disconnect():
 def create_lobby(lobbyId):
     try:
         socketio.server.manager.rooms['/'][lobbyId]
-        socketio.emit("console-message", "Lobby name already taken")
+        socketio.emit("display-message", "Lobby name already taken")
     except:
         join_room(lobbyId)
         socketio.emit("console-message", f"{request.sid} created {lobbyId} succesfully", room=lobbyId)
@@ -90,27 +90,31 @@ def create_lobby(lobbyId):
 
 @socketio.on('join-lobby')
 def join_lobby(lobbyId):
-
+  lobby = ""
+  print(lobbyId)
+  try:
     rooms = socketio.server.manager.rooms   # gets all rooms
     lobby = rooms['/'][lobbyId]             # gets current lobby from room
-
-    if (not lobby):
-        socketio.emit("console-message", "Lobby doesn't exist")
-    elif (len(lobby) >= 2):
-        socketio.emit("console-message", "Lobby is already full")
+    print(lobby)
+    if (len(lobby) >= 2):
+      socketio.emit("display-message", "Lobby is already full")
     else:
-        join_room(lobbyId)
-        socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
-        socketio.emit("send-to-game", room=request.sid)
-        socketio.sleep(1)
-        socketio.emit("console-message", f"game starting...", room=lobbyId)
-        socketio.emit("start-game", room=lobbyId)
-        startTimer(lobbyId)
+      join_room(lobbyId)
+      socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
+      socketio.emit("send-to-game", room=request.sid)
+      socketio.sleep(1)
+      socketio.emit("console-message", f"game starting...", room=lobbyId)
+      socketio.emit("start-game", room=lobbyId)
+      startTimer(lobbyId)
+  except:
+      socketio.emit("display-message", "Lobby doesn't exist")
+
+
 
 def startTimer(lobbyId):
   socketio.sleep(3)
   print(f"Lobby {lobbyId}: Starting timer")
-  time = 10
+  time = 7
   socketio.emit("start-timer", time ,room=lobbyId)
   socketio.sleep(time)
   print(f"Lobby {lobbyId}: Timer finished")
