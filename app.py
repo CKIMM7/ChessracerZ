@@ -10,10 +10,7 @@ from werkzeug import exceptions
 from subprocess import Popen
 import pathlib
 import hellopy
-# import boto3
-
 import os
-# from dotenv import load_dotenv
 
 
 app = Flask(__name__)
@@ -32,7 +29,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
 db = SQLAlchemy(app)
-
 
 
 # Init ma
@@ -154,6 +150,8 @@ def updateGameRace(lobbyId, x, y, player_lap):
       socketio.emit("get-moves-race", moves, room=lobbyId)
 
   socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
+
+
 
 @socketio.on('end-game')
 def endGame(lobbyId):

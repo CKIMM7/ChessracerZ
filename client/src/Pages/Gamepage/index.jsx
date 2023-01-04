@@ -64,6 +64,7 @@ function Gamepage() {
         })
 
         if (round === 1 || round % 2 === 1) {
+            setDraggable(false)
             document.getElementById("chess-game").style.display = "flex"
             document.querySelector("canvas").style.display = "none"
         } else {
