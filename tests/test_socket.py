@@ -1,5 +1,5 @@
 import pytest
-from app import socketio, create_lobby, join_room
+from app import socketio, create_lobby
 
 # manager = SocketIOManager()
 
