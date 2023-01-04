@@ -8,7 +8,7 @@ import "./board.css"
 
 const Board = ({ lobbyId, color, draggable}) =>{
     const [game, setGame] = useState(new Chess());
-
+    const [gameState, setGameState] = useState('Player 1')
     if (!color) color ='b'
 
     //console.log(game.board())
@@ -66,6 +66,36 @@ const Board = ({ lobbyId, color, draggable}) =>{
        })
        if(game.in_checkmate()){
             socket.emit("end-game", lobbyId)
+            if(game.turn() == 'b'){
+            setGameState('White has won the game via checkmate')
+            } else {
+            setGameState('Black has won the game via checkmate')
+            }
+            document.getElementById('gameEnding').style.display = 'flex'
+       }
+
+       if(game.in_draw()){
+        socket.emit('end-game', lobbyId)
+        setGameState('This game has ended in a draw')
+        document.getElementById('gameEnding').style.display = 'flex'
+       }
+
+       if(game.in_stalemate()){
+        socket.emit('end-game', lobbyId)
+        setGameState('This game has ended in a stalemate')
+        document.getElementById('gameEnding').style.display = 'flex'
+       }
+       
+       if(game.insufficient_material()){
+        socket.emit('end-game', lobbyId)
+        setGameState('This game has ended due to a lack of material')
+        document.getElementById('gameEnding').style.display = 'flex'
+       }
+
+       if(game.in_threefold_repetition()){
+        socket.emit('end-game', lobbyId)
+        setGameState('This game has ended due to repetition of moves')
+        document.getElementById('gameEnding').style.display = 'flex'
        }
     }
   )
@@ -108,6 +138,7 @@ const Board = ({ lobbyId, color, draggable}) =>{
       boardOrientation={color == 'w' ? 'white' : 'black'}
       arePiecesDraggable = {draggable}
       />
+      <div id="gameEnding">{gameState}</div>
     </div>
   );
 }
