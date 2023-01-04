@@ -80,8 +80,8 @@ function Gamepage() {
                 <Header />
                 <main>
                     <Timer />
-                    <p>Lobby: {lobbyId}</p>
-                    <p>Round: {round}</p>
+                    {/* <p>Lobby: {lobbyId}</p> */}
+                    {/* <p>Round: {round}</p> */}
                     <div id="waiting">{waitMessage}</div>
                     <div id="chess-game">
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>
