@@ -11,7 +11,11 @@ export default class SceneMain extends Phaser.Scene {
         this.socket = socket
         this.props = props
 
-        console.log(this)
+        this.lineStart = false
+        this.lineFinish = false
+        this.lap = false
+        this.velocity = 500
+
     }
 
     preload() {
@@ -30,17 +34,18 @@ export default class SceneMain extends Phaser.Scene {
         const layer = map.createLayer('ground', tileset, 0, 0);
         const cactusLayer = map.createLayer('cactus', tileset, 0, 0);
         const hillssLayer = map.createLayer('hills', tileset, 0, 0);
+        this.tileset = tileset;
 
         if(this.props.color) {
-          this.player=this.physics.add.sprite(100,100,"face");
-          this.opponent=this.physics.add.sprite(100,100,"opponent");}
+          this.player=this.physics.add.sprite(500,150,"face");
+          this.opponent=this.physics.add.sprite(500,150,"opponent");}
 
         if(!this.props.color) {
-          this.player=this.physics.add.sprite(100,100,"opponent");
-          this.opponent=this.physics.add.sprite(100,100,"face");}
+          this.player=this.physics.add.sprite(500,150,"opponent");
+          this.opponent=this.physics.add.sprite(500,150,"face");}
         
-        Align.scaleToGameW(this.player,0.04,this);
-        Align.scaleToGameW(this.opponent,0.04,this);
+        Align.scaleToGameW(this.player,0.02,this);
+        Align.scaleToGameW(this.opponent,0.02,this);
 
         this.cursors=this.input.keyboard.createCursorKeys();
 
@@ -60,66 +65,99 @@ export default class SceneMain extends Phaser.Scene {
         
         //corner walls
         hillssLayer.setCollisionBetween(137, 158)
-        
+
+        this.player.lap = 0
+        this.opponent.lap = 0
+
+        //globals
+        console.log(tileset)
+        console.log(this)
+
         this.socket.on("get-moves-race", function(moves) {
-          console.log(moves.x)
-          console.log(moves.y)
-          console.log(this.player)
 
           self.opponent.x = moves.x
           self.opponent.y = moves.y
+          if(moves.player_lap) self.opponent.lap = moves.player_lap
 
+          if(self.opponent.lap == 2 || self.player.lap ==2)  {
+            console.log('game end')
+            socket.emit("end-game", self.lobbyId)
+
+            window.location.replace(process.env.REACT_APP_HOME_URL);
+          }
+        })
+
+        this.socket.on("start-timer", function(time) {
 
         })
 
-    }
+        this.socket.on("timer-end", function() {
+
+          console.log('timer-end')
+          let time = 3
+
+          try {
+            clearInterval(timerInterval)
+        } catch {}
+
+          let timerInterval =  setInterval(() => {  
+            time -= 1
+            console.log(time)
+
+            if(time > 1) {
+              console.log('pause SceneMain')
+              self.scene.pause('SceneMain');
+  
+            } else if(time === 0) {
+              console.log('equal to zero')
+              self.scene.resume('SceneMain');
+  
+            }
+
+            if(time == 0) {
+              clearInterval(timerInterval)
+            }
+
+          }, 1000)          
+
+
+          self.opponent.x = 500;
+          self.opponent.y = 150;
+
+          self.player.x = 500;
+          self.player.y = 150;
+
+          self.opponent.lap = 0;
+          self.player.lap = 0;
+        })
+      
+        //this.scene.launch('SceneMain');
+      }
 
     update() {
 
-      //this.player.setVelocityY(20);
-      //this.player.setVelocityX(20);
-
-      //send my moves to the opponent and move the opp
-
-      //socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
-
-      //   socket.on("get-moves-race", function(moves){
-      //     console.log(moves.x)
-      //     console.log(moves.y)
-      //     console.log(x)
-      //     x = 500
-      // })
-
-      // this.opponent.x += 5;
-
-      // if (this.opponent.x > 950)
-      // {
-      //   this.opponent.x = 150;
-      // }
-
-      //console.log('fast')
 
        if (this.cursors.up.isDown==true)
        {
-        this.player.setVelocityY(-200);
-        //socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+        this.player.setVelocityY(-this.velocity);
+
        }
        if (this.cursors.down.isDown==true)
        {
-         this.player.setVelocityY(200);
-         //socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+         this.player.setVelocityY(this.velocity);
+
 
        }
         if (this.cursors.right.isDown==true)
        {
-         this.player.setVelocityX(200);
-         //socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+         this.player.setVelocityX(this.velocity);
+
 
        }
        if (this.cursors.left.isDown==true)
        {
-         this.player.setVelocityX(-200);
-         //socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+         this.player.setVelocityX(-this.velocity);
+
        }
 
       // emit player movement
@@ -128,9 +166,31 @@ export default class SceneMain extends Phaser.Scene {
       let r = this.player.rotation;
 
       if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y || r !== this.player.oldPosition.rotation)) {
-        console.log('playerMovement in if statement')
-        console.log('send socket to server')  
-        socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y)
+
+        if(this.player.y < 180 && this.player.y > 140 && this.player.x > 370 && 380 > this.player.x) {
+          this.lineStart = true
+          console.log('this.lineStart')
+          console.log(this.lineStart)
+        }
+
+        if(this.player.y < 180 && this.player.y > 140 && this.player.x > 270 && 280 > this.player.x) {
+          this.lineFinish = true
+          console.log('this.lineFinish')
+          console.log(this.lineFinish)
+        }
+
+        if(this.lineStart && this.lineFinish) {
+          this.player.lap += 1
+          this.lineStart= false
+          this.lineFinish= false
+          console.log(this.player.lap)
+
+          socket.emit("pass-game-race", this.lobbyId, null, null, this.player.lap)
+
+        }
+
+
+        socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y, null)
       }
 
        this.player.oldPosition = {
@@ -139,4 +199,4 @@ export default class SceneMain extends Phaser.Scene {
         rotation: this.player.rotation
       };
    }
-}   
+}  

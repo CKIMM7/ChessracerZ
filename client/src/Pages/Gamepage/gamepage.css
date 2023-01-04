@@ -4,6 +4,7 @@ div#chess-game {
 
 div#chess-game {
     text-align: center;
+    margin-top: 10px;
 }
 
 div#waiting {
