@@ -87,7 +87,40 @@ export default class SceneMain extends Phaser.Scene {
           }
         })
 
+        this.socket.on("start-timer", function(time) {
+
+        })
+
         this.socket.on("timer-end", function() {
+
+          console.log('timer-end')
+          let time = 3
+
+          try {
+            clearInterval(timerInterval)
+        } catch {}
+
+          let timerInterval =  setInterval(() => {  
+            time -= 1
+            console.log(time)
+
+            if(time > 1) {
+              console.log('pause SceneMain')
+              self.scene.pause('SceneMain');
+  
+            } else if(time === 0) {
+              console.log('equal to zero')
+              self.scene.resume('SceneMain');
+  
+            }
+
+            if(time == 0) {
+              clearInterval(timerInterval)
+            }
+
+          }, 1000)          
+
+
           self.opponent.x = 500;
           self.opponent.y = 150;
 
@@ -96,7 +129,10 @@ export default class SceneMain extends Phaser.Scene {
 
           self.opponent.lap = 0;
           self.player.lap = 0;
-        })}
+        })
+      
+        //this.scene.launch('SceneMain');
+      }
 
     update() {
 
