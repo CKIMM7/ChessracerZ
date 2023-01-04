@@ -4,12 +4,15 @@ import { Chess } from 'chess.js'
 import { socket } from '../../socket'
 import { useNavigate } from 'react-router-dom'
 import inCheckMP3 from "../../assets/inCheck.mp3"
+import pieceMoveMP3 from "../../assets/pieceMove.mp3"
 import "./board.css"
 
 const Board = ({ lobbyId, color, draggable }) =>{
     const [game, setGame] = useState(new Chess());
     const [gameState, setGameState] = useState('Player 1')
     const [checkMessage, setCheckMessage] = useState("")
+    const pieceMoveNoise = new Audio(pieceMoveMP3)
+    
     if (!color) color ='b'
 
     //console.log(game.board())
@@ -23,7 +26,7 @@ const Board = ({ lobbyId, color, draggable }) =>{
                 const update = {...g}
 
                modify(update)
-
+               pieceMoveNoise.play()
               //  console.log('update')
               //  console.log(update.fen())
               //  console.log(update)
