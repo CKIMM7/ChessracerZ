@@ -9,3 +9,5 @@
 flask-run does not support websockets
 
 The flask runcommandintroduced in Flask 0.11 can be used to start a Flask-SocketIO development server based on Werkzeug, but this method of starting the Flask-SocketIO server is not recommended due to lack of WebSocket support. Previous versions of this package included a customized version of the flask run command that allowed the use of WebSocket on eventlet and gevent production servers, but this functionality has been discontinued in favor of the socketio.run(app) startup method shown above which is more robust.
+
+eventlet = "==0.30.2"

@@ -83,7 +83,7 @@ export default class SceneMain extends Phaser.Scene {
             console.log('game end')
             socket.emit("end-game", self.lobbyId)
 
-            if(document.querySelector("canvas")) document.querySelector("canvas").remove()
+            window.location.replace(process.env.REACT_APP_HOME_URL);
           }
         })
 
