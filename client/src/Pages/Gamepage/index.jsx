@@ -64,6 +64,7 @@ function Gamepage() {
         })
 
         if (round === 1 || round % 2 === 1) {
+            setDraggable(false)
             document.getElementById("chess-game").style.display = "flex"
             document.querySelector("canvas").style.display = "none"
         } else {
@@ -79,8 +80,8 @@ function Gamepage() {
                 <Header />
                 <main>
                     <Timer />
-                    <p>Lobby: {lobbyId}</p>
-                    <p>Round: {round}</p>
+                    {/* <p>Lobby: {lobbyId}</p> */}
+                    {/* <p>Round: {round}</p> */}
                     <div id="waiting">{waitMessage}</div>
                     <div id="chess-game">
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>

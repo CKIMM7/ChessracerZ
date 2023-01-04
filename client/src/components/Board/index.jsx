@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import "./board.css"
 
-const Board = ({ lobbyId, color, draggable}) =>{
+const Board = ({ lobbyId, color, draggable }) =>{
     const [game, setGame] = useState(new Chess());
     const [gameState, setGameState] = useState('Player 1')
     if (!color) color ='b'
@@ -53,9 +53,7 @@ const Board = ({ lobbyId, color, draggable}) =>{
     function onOpponentDrop(source,target, arg=null, updateOpponent=null){
 
       if(game.turn() === color) return;
-
       let move = null;
-
       safeGameMutate(
         
         (game)=>{
@@ -64,6 +62,9 @@ const Board = ({ lobbyId, color, draggable}) =>{
           to: target,
           promotion:'q'
        })
+       
+      // document.getElementById('winner').style.display = 'none'
+       
        if(game.in_checkmate()){
             socket.emit("end-game", lobbyId)
             if(game.turn() == 'b'){
@@ -114,22 +115,12 @@ const Board = ({ lobbyId, color, draggable}) =>{
   })
   }, [])
 
-//   function checkmate(){
-//         // game.on('checkmate', (attack)=>{
-//         //     console.log('You won with ' + attack)
-//         // })
-//         safeGameMutate((game) =>{
-//             if(game.checkmate()){
-//                 socket.emit("pass-game", lobbyId, source, target)
-//             }
-//         })
-//   }
-
     const navigate = useNavigate()
 
     socket.on("send-to-home", () => {
         navigate("/")
     })
+
   return (
     <div className="app">
       <Chessboard 

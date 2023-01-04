@@ -11,15 +11,16 @@ function Homepage() {
  
     const navigate = useNavigate()
     const [lobbyId, setLobbyId] = useState("")
+    const [displayMessage, setDisplayMessage] = useState("")
 
     function createLobby(e) {
         e.preventDefault()
-        socket.emit("create-lobby", lobbyId)
+        lobbyId ? socket.emit("create-lobby", lobbyId) : setDisplayMessage("Enter a lobby Id")
     }
 
     function joinLobby(e) {
         e.preventDefault()
-        socket.emit("join-lobby", lobbyId)
+        lobbyId ? socket.emit("join-lobby", lobbyId) : setDisplayMessage("Enter a lobby Id")
     }
 
     useEffect(() => {
@@ -27,6 +28,12 @@ function Homepage() {
             console.log(`${socket.id} connected`)
         });
   
+        
+        socket.on("display-message", function(msg){
+            setDisplayMessage(msg)
+        })
+
+
         socket.on("console-message", function(msg){
             console.log(msg)
         })
@@ -47,6 +54,7 @@ function Homepage() {
                 <h1>ChessRacerZ</h1>
                 <div id="lobbyOptions">
                     <input type="text" placeholder="Enter LobbyId" onChange={updateLobbyId} value={lobbyId} required/>
+                    {displayMessage ? <p id="displayMessage">{displayMessage}</p> : null}
                     <button onClick={createLobby}>Create Lobby</button>
                     <button onClick={joinLobby}>Join Lobby</button>
                     {/* <p>{process.env.REACT_APP_URL}</p> */}
