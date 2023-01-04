@@ -49,7 +49,7 @@ function Homepage() {
                     <input type="text" placeholder="Enter LobbyId" onChange={updateLobbyId} value={lobbyId} required/>
                     <button onClick={createLobby}>Create Lobby</button>
                     <button onClick={joinLobby}>Join Lobby</button>
-                    <p>{process.env.REACT_APP_URL}</p>
+                    {/* <p>{process.env.REACT_APP_URL}</p> */}
                 </div>
             </main>
         </>
