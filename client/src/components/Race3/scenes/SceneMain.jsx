@@ -79,8 +79,12 @@ export default class SceneMain extends Phaser.Scene {
           self.opponent.y = moves.y
           if(moves.player_lap) self.opponent.lap = moves.player_lap
 
-          if(self.opponent.lap == 2 || self.player.lap ==2) 
-          console.log(self.opponent.lap)
+          if(self.opponent.lap == 2 || self.player.lap ==2)  {
+            console.log('game end')
+            socket.emit("end-game", self.lobbyId)
+
+            if(document.querySelector("canvas")) document.querySelector("canvas").remove()
+          }
         })
 
         this.socket.on("timer-end", function() {
@@ -159,4 +163,4 @@ export default class SceneMain extends Phaser.Scene {
         rotation: this.player.rotation
       };
    }
-}   
+}  

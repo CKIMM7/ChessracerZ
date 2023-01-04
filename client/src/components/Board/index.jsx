@@ -8,9 +8,7 @@ import "./board.css"
 
 const Board = ({ lobbyId, color, draggable }) =>{
     const [game, setGame] = useState(new Chess());
-    console.log(game)
     const [gameState, setGameState] = useState('Player 1')
-
     if (!color) color ='b'
 
     //console.log(game.board())
@@ -69,7 +67,11 @@ const Board = ({ lobbyId, color, draggable }) =>{
        
        if(game.in_checkmate()){
             socket.emit("end-game", lobbyId)
-            setGameState('Player x has won the game via checkmate')
+            if(game.turn() == 'b'){
+            setGameState('White has won the game via checkmate')
+            } else {
+            setGameState('Black has won the game via checkmate')
+            }
             document.getElementById('gameEnding').style.display = 'flex'
        }
 

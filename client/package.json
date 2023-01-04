@@ -21,10 +21,30 @@
     "socket.io-client": "^4.5.4",
     "web-vitals": "^2.1.4"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(js|jsx)$",
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!chess.js)"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "testEnvironment": "jsdom"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --watch --silent --setupFilesAfterEnv ./test/setupTests.js --verbose false",
+    "coverage": "jest --coverage --setupFilesAfterEnv ./test/setupTests.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,5 +64,25 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.5",
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@cfaester/enzyme-adapter-react-18": "^0.6.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "babel-jest": "^29.3.1",
+    "babel-loader": "^9.1.0",
+    "css-loader": "^6.7.2",
+    "jest": "^27.5.1",
+    "jest-canvas-mock": "^2.4.0",
+    "jest-environment-jsdom": "^27.5.1",
+    "socket.io": "^4.5.4",
+    "style-loader": "^3.3.1"
   }
 }
