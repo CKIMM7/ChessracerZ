@@ -9,6 +9,7 @@ import "./board.css"
 const Board = ({ lobbyId, color, draggable }) =>{
     const [game, setGame] = useState(new Chess());
     const [gameState, setGameState] = useState('Player 1')
+
     if (!color) color ='b'
 
     //console.log(game.board())
