@@ -22,10 +22,10 @@ div#waiting {
 }
 
 canvas {
+    position: absolute;
     display: block;
     margin: 0;
-    position: absolute;
-    top: 50%;
+    top: 600px;
     left: 50%;
     transform: translate(-50%, -50%);
 }
