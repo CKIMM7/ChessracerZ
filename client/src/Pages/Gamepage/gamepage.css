@@ -8,6 +8,7 @@ div#chess-game {
 }
 
 div#waiting {
+    white-space: pre-line;
     position: absolute;
     top: 50vh;
     /* left: 50%; */

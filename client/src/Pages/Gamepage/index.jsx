@@ -11,7 +11,7 @@ import "./gamepage.css"
 
 function Gamepage() {
  
-    const [waitMessage, setWaitMessage] = useState("Waiting on opponent...")
+
     const [draggable, setDraggable] = useState(false)
     const [round, setRound] = useState(1)
 
@@ -19,6 +19,7 @@ function Gamepage() {
     const { state } = useLocation()
     const { lobbyId, color } = state
 
+    const [waitMessage, setWaitMessage] = useState(`Waiting on opponent... \n  Room code: ${lobbyId}`)
 
     useEffect(() => {
         socket.on("console-message", function(msg){
