@@ -3,14 +3,16 @@ import { Chessboard } from 'react-chessboard'
 import { Chess } from 'chess.js'
 import { socket } from '../../socket'
 import { useNavigate } from 'react-router-dom'
-
+import inCheckMP3 from "../../assets/inCheck.mp3"
+import pieceMoveMP3 from "../../assets/pieceMove.mp3"
 import "./board.css"
 
 const Board = ({ lobbyId, color, draggable }) =>{
     const [game, setGame] = useState(new Chess());
     const [gameState, setGameState] = useState('Player 1')
-    const navigate = useNavigate();
-
+    const [checkMessage, setCheckMessage] = useState("")
+    const pieceMoveNoise = new Audio(pieceMoveMP3)
+    
     if (!color) color ='b'
 
     //console.log(game.board())
@@ -24,7 +26,7 @@ const Board = ({ lobbyId, color, draggable }) =>{
                 const update = {...g}
 
                modify(update)
-
+               pieceMoveNoise.play()
               //  console.log('update')
               //  console.log(update.fen())
               //  console.log(update)
@@ -69,7 +71,11 @@ const Board = ({ lobbyId, color, draggable }) =>{
        
        if(game.in_checkmate()){
             socket.emit("end-game", lobbyId)
-            setGameState('Player x has won the game via checkmate')
+            if(game.turn() == 'b'){
+            setGameState('White has won the game via checkmate')
+            } else {
+            setGameState('Black has won the game via checkmate')
+            }
             document.getElementById('gameEnding').style.display = 'flex'
        }
 
@@ -96,6 +102,17 @@ const Board = ({ lobbyId, color, draggable }) =>{
         setGameState('This game has ended due to repetition of moves')
         document.getElementById('gameEnding').style.display = 'flex'
        }
+
+       if(game.in_check() && game.turn() == color){     
+        setCheckMessage("You're in check!")
+        const checkNoise = new Audio(inCheckMP3)
+        checkNoise.play()
+       }
+
+       if(!game.in_check()){       
+          setCheckMessage("")
+       }
+       
     }
   )
  //illegal move 
@@ -113,11 +130,15 @@ const Board = ({ lobbyId, color, draggable }) =>{
   })
   }, [])
 
+    const navigate = useNavigate()
+
     socket.on("send-to-home", () => {
         navigate("/")
     })
+
   return (
     <div className="app">
+      <p>{checkMessage}</p>
       <Chessboard 
       position={game.fen()}
       onPieceDrop ={onDrop}

@@ -27,7 +27,7 @@ function Timer() {
 
     }, [])
 
-    return <div id="timer">
+    return <div id="timer" role="timer">
             <p>{Math.floor(timer / 60)} : {(timer % 60)}</p>
         </div>
     

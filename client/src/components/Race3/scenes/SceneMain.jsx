@@ -16,6 +16,9 @@ export default class SceneMain extends Phaser.Scene {
         this.lap = false
         this.velocity = 500
 
+        this.playerScore = ''
+        this.opponentScore = ''
+
     }
 
     preload() {
@@ -77,17 +80,65 @@ export default class SceneMain extends Phaser.Scene {
 
           self.opponent.x = moves.x
           self.opponent.y = moves.y
-          if(moves.player_lap) self.opponent.lap = moves.player_lap
+          if(moves.player_lap) {
 
-          if(self.opponent.lap == 2 || self.player.lap ==2)  {
+            self.opponent.lap = moves.player_lap
+            console.log('self.opponent.lap')
+            console.log(self.opponent.lap)
+
+            self.opponentScore.destroy()
+            self.opponentScore = self.add
+            .text(100, 120, `Opponent: ${self.opponent.lap}`, {
+              fill: '#CED4D6',
+              fontSize: '20px',
+              fontStyle: 'bold',
+              align: 'center',
+            })
+            .setOrigin(0.5);
+
+          }
+
+          if(self.opponent.lap == 3 || self.player.lap == 3)  {
             console.log('game end')
             socket.emit("end-game", self.lobbyId)
 
-            if(document.querySelector("canvas")) document.querySelector("canvas").remove()
+            window.location.replace(process.env.REACT_APP_HOME_URL);
           }
         })
 
+        this.socket.on("start-timer", function(time) {
+
+        })
+
         this.socket.on("timer-end", function() {
+
+          console.log('timer-end')
+          let time = 3
+
+          try {
+            clearInterval(timerInterval)
+        } catch {}
+
+          let timerInterval =  setInterval(() => {  
+            time -= 1
+            console.log(time)
+
+            if(time > 1) {
+              console.log('pause SceneMain')
+              self.scene.pause('SceneMain');
+  
+            } else if(time === 0) {
+              console.log('equal to zero')
+              self.scene.resume('SceneMain');
+  
+            }
+
+            if(time == 0) {
+              clearInterval(timerInterval)
+            }
+
+          }, 1000)          
+
           self.opponent.x = 500;
           self.opponent.y = 150;
 
@@ -96,7 +147,55 @@ export default class SceneMain extends Phaser.Scene {
 
           self.opponent.lap = 0;
           self.player.lap = 0;
-        })}
+
+          self.opponentScore.destroy()
+          self.opponentScore = self.add
+            .text(100, 120, `Opponent: ${self.opponent.lap}`, {
+              fill: '#CED4D6',
+              fontSize: '20px',
+              fontStyle: 'bold',
+              align: 'center',
+            })
+            .setOrigin(0.5);
+
+          self.playerScore.destroy()
+          self.playerScore = self.add
+          .text(100, 60, `player: ${self.player.lap}`, {
+            fill: '#CED4D6',
+            fontSize: '20px',
+            fontStyle: 'bold',
+            align: 'center',
+          })
+          .setOrigin(0.5);
+
+        })
+
+        this.popup = this.add.graphics();
+        this.popup.lineStyle(1, 0x2a275c);
+        this.popup.fillStyle(0x7c8d99, 0.5);
+        this.popup.strokeRect(25, 25, 200, 200);
+        this.popup.fillRect(25, 25, 200, 200);
+    
+        this.playerScore = this.add
+        .text(100, 60, `player: ${self.player.lap}`, {
+          fill: '#CED4D6',
+          fontSize: '20px',
+          fontStyle: 'bold',
+          align: 'center',
+        })
+        .setOrigin(0.5);
+
+        this.opponentScore = this.add
+        .text(100, 120, `Opponent: ${self.opponent.lap}`, {
+          fill: '#CED4D6',
+          fontSize: '20px',
+          fontStyle: 'bold',
+          align: 'center',
+        })
+        .setOrigin(0.5);
+
+
+      }
 
     update() {
 
@@ -147,14 +246,33 @@ export default class SceneMain extends Phaser.Scene {
           this.player.lap += 1
           this.lineStart= false
           this.lineFinish= false
+          console.log('player complete lap')
           console.log(this.player.lap)
 
-          socket.emit("pass-game-race", this.lobbyId, null, null, this.player.lap)
+          socket.emit("pass-game-race", this.lobbyId, null, null, this.player.lap, this.opponent.lap)
+
+          this.playerScore.destroy()
+          this.playerScore = this.add
+          .text(100, 60, `player: ${this.player.lap}`, {
+            fill: '#CED4D6',
+            fontSize: '20px',
+            fontStyle: 'bold',
+            align: 'center',
+          })
+          .setOrigin(0.5);
+          
+          if(this.opponent.lap == 3 || this.player.lap == 3)  {
+            console.log('game end')
+            socket.emit("end-game", this.lobbyId)
+  
+            window.location.replace(process.env.REACT_APP_HOME_URL);
+          }
 
         }
 
 
-        socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y, null)
+
+        socket.emit("pass-game-race", this.lobbyId, this.player.x, this.player.y, null, null)
       }
 
        this.player.oldPosition = {
@@ -163,4 +281,4 @@ export default class SceneMain extends Phaser.Scene {
         rotation: this.player.rotation
       };
    }
-}   
+}  

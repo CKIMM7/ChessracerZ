@@ -2,7 +2,7 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 
 
-import { GoogleLogin } from "./components"
+// import { GoogleLogin } from "./components"
 import "./header.css"
 
 
@@ -20,7 +20,7 @@ function Header() {
   return <header>
             <img src={logo} alt="Logo" />
             <h1 onClick={goHome}>ChessRacerZ</h1>
-            <GoogleLogin />
+            {/* <GoogleLogin /> */}
         </header>
 
 }

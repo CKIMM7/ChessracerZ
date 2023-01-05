@@ -6,9 +6,11 @@ div#chess-game {
     text-align: center;
     width: 50vw;
     margin: auto;
+    margin-top: 10px;
 }
 
 div#waiting {
+    white-space: pre-line;
     position: absolute;
     top: 50vh;
     /* left: 50%; */
@@ -19,6 +21,15 @@ div#waiting {
     text-align: center;
     padding: 20px;
     z-index: 6;
+}
+
+canvas {
+    display: block;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 svg {
