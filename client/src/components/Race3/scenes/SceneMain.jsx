@@ -44,8 +44,8 @@ export default class SceneMain extends Phaser.Scene {
           this.opponent=this.physics.add.sprite(500,150,"opponent");}
 
         if(!this.props.color) {
-          this.player=this.physics.add.sprite(500,150,"opponent");
-          this.opponent=this.physics.add.sprite(500,150,"face");}
+          this.player=this.physics.add.sprite(500,120,"opponent");
+          this.opponent=this.physics.add.sprite(500,120,"face");}
         
         this.player.width=200
         this.player.scaleY=this.player.scaleX
@@ -236,13 +236,13 @@ export default class SceneMain extends Phaser.Scene {
       if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y || r !== this.player.oldPosition.rotation)) {
         console.log(this.player.oldPosition)
 
-        if(this.player.y < 180 && this.player.y > 120 && this.player.x > 370 && 380 > this.player.x) {
+        if(this.player.y < 190 && this.player.y > 120 && this.player.x > 370 && 380 > this.player.x) {
           this.lineStart = true
           console.log('this.lineStart')
           console.log(this.lineStart)
         }
 
-        if(this.player.y < 180 && this.player.y > 120 && this.player.x > 270 && 280 > this.player.x) {
+        if(this.player.y < 190 && this.player.y > 120 && this.player.x > 270 && 280 > this.player.x) {
           this.lineFinish = true
           console.log('this.lineFinish')
           console.log(this.lineFinish)
