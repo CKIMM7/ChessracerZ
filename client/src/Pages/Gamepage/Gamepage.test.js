@@ -34,13 +34,13 @@ describe('Gamepage', () =>{
     })
 
     test('Lobby name correctly displayed on page', () =>{
-        const lobbyIdText = screen.getByText("Lobby: TestLobby") 
+        const lobbyIdText = screen.getByText("Room code: TestLobby", {exact: false}) 
 
         expect(lobbyIdText).toBeInTheDocument()
     })
     
     test('Displays waiting on opponent message', () =>{
-        const waiting = screen.getByText("Waiting on opponent...") 
+        const waiting = screen.getByText("Waiting on opponent...", {exact: false}) 
 
         expect(waiting).toBeInTheDocument()
     })

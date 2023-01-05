@@ -9,7 +9,7 @@ describe('Header', () =>{
     })
 
     test('Clicking title text sends to homepage', () =>{
-        const title = screen.getByRole('heading', { name: 'ChessRacerZ'})
+        const title = screen.getByRole('heading', { name: 'Chess Racer'})
 
         fireEvent.click(title)
 

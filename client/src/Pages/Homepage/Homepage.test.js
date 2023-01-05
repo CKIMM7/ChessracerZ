@@ -57,7 +57,7 @@ describe('Homepage', () =>{
     })
 
     test('Title is displayed', () =>{
-        const title = screen.getByRole('heading', { name: 'ChessRacerZ'})
+        const title = screen.getByRole('heading', { name: 'Chess Racer'})
         expect(title).toBeInTheDocument()
     })
 

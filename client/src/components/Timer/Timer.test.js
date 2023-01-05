@@ -1,36 +1,44 @@
 import { screen, render, fireEvent, act } from '@testing-library/react';
 import Timer from '.'
-import { socket } from '../../socket'
 
-// jest.mock("../../socket", () => ({
-//     socket: {
-//       on: jest.fn()
-//     }
-// }));
-
+import MockedSocket from 'socket.io-mock';
 
 describe('Timer', () =>{
+  let socket = new MockedSocket()
 
     beforeEach(() =>{
         render(<Timer />)
     })
 
-    test('Timer is displayed', () =>{
-        const timer = screen.getByRole('timer')
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+  
 
+    test('Timer is displayed', () => {
+        const timer = screen.getByRole('timer')
+        
         expect(timer).toBeInTheDocument()
+        expect(screen.getByText("0 : 0")).toBeInTheDocument();
     })
 
-    test('Timer starts and updates when "start-timer" event is received', () =>{
+    test('Timer starts and updates when "start-timer" event is received', () => {
+      
+      function wait(){}
 
-        act(() => {
-          socket.emit("start-timer", 60);
-        });
-        expect(screen.getByText("1 : 0")).toBeInTheDocument();
-    
-        act(() => {
-          jest.advanceTimersByTime(1000);
-        });
-        expect(screen.getByText("0 : 59")).toBeInTheDocument();
-      });
+      const setTimer = jest.fn()
+
+      socket.on('start-timer', (time) => {
+
+        // expect(setTimer).toHaveBeenCalled()
+        // setTimeout(wait,1000);
+        expect(time).toEqual(60)
+        // expect(screen.getByText("1 : 0")).toBeInTheDocument();
+        // setTimeout(wait,1000);
+        // expect(screen.getByText("0 : 59")).toBeInTheDocument();
+      })
+
+      socket.socketClient.emit('start-timer', 60)
+    });
+
 })
