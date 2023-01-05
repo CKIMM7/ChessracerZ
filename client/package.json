@@ -43,7 +43,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --watch --silent --setupFilesAfterEnv ./test/setupTests.js --verbose false",
+    "test": "jest --watch --setupFilesAfterEnv ./test/setupTests.js --verbose false",
     "coverage": "jest --coverage --setupFilesAfterEnv ./test/setupTests.js",
     "eject": "react-scripts eject"
   },
@@ -83,6 +83,7 @@
     "jest-canvas-mock": "^2.4.0",
     "jest-environment-jsdom": "^27.5.1",
     "socket.io": "^4.5.4",
+    "socket.io-mock": "^1.3.2",
     "style-loader": "^3.3.1"
   }
 }
