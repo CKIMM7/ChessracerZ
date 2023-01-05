@@ -3,8 +3,6 @@ import { useLocation } from 'react-router-dom'
 import { socket } from "../../socket"
 
 import { Header, Board, Race, Timer } from "../../components"
-import LapCounter from "../../components/lapcounter"
-
 import Game4 from "../../components/Race3"
 
 import "./gamepage.css"
@@ -43,8 +41,6 @@ function Gamepage() {
                   setDraggable(true)
                 }
             }, 1000);
-    
-            
           });
 
         
@@ -84,8 +80,6 @@ function Gamepage() {
                 <Header />
                 <main>
                     <Timer />
-                    {/* <p>Lobby: {lobbyId}</p> */}
-                    {/* <p>Round: {round}</p> */}
                     <div id="waiting">{waitMessage}</div>
                     <div id="chess-game">
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>
