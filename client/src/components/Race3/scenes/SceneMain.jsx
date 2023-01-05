@@ -28,7 +28,7 @@ export default class SceneMain extends Phaser.Scene {
       this.load.tilemapTiledJSON('map', "./assets3/map1.json");
     }
 
-    create() {    
+    create() {  
       
         let self = this; 
 
@@ -40,17 +40,13 @@ export default class SceneMain extends Phaser.Scene {
         this.tileset = tileset;
 
         if(this.props.color) {
-          this.player=this.physics.add.sprite(500,150,"face");
-          this.opponent=this.physics.add.sprite(500,150,"opponent");}
+          this.player=this.physics.add.sprite(500,200,"face");
+          this.opponent=this.physics.add.sprite(500,180,"opponent");}
 
         if(!this.props.color) {
-          this.player=this.physics.add.sprite(500,120,"opponent");
-          this.opponent=this.physics.add.sprite(500,120,"face");}
-        
-        this.player.width=200
-        this.player.scaleY=this.player.scaleX
-
-
+          this.player=this.physics.add.sprite(500,180,"opponent");
+          this.opponent=this.physics.add.sprite(500,200,"face");}
+      
 
         Align.scaleToGameW(this.player,0.02,this);
         Align.scaleToGameW(this.opponent,0.02,this);
@@ -145,10 +141,10 @@ export default class SceneMain extends Phaser.Scene {
           }, 1000)          
 
           self.opponent.x = 500;
-          self.opponent.y = 150;
+          self.opponent.y = 180;
 
           self.player.x = 500;
-          self.player.y = 150;
+          self.player.y = 200;
 
           self.opponent.lap = 0;
           self.player.lap = 0;
@@ -174,12 +170,6 @@ export default class SceneMain extends Phaser.Scene {
           .setOrigin(0.5);
 
         })
-
-        this.popup = this.add.graphics();
-        this.popup.lineStyle(1, 0x2a275c);
-        this.popup.fillStyle(0x7c8d99, 0.5);
-        this.popup.strokeRect(25, 25, 200, 200);
-        this.popup.fillRect(25, 25, 200, 200);
     
         this.playerScore = this.add
         .text(100, 60, `player: ${self.player.lap}`, {
@@ -199,6 +189,11 @@ export default class SceneMain extends Phaser.Scene {
         })
         .setOrigin(0.5);
 
+        this.popup = this.add.graphics();
+        this.popup.lineStyle(1, 0x2a275c);
+        this.popup.fillStyle(0x7c8d99, 0.5);
+        this.popup.strokeRect(25, 25, 200, 200);
+        this.popup.fillRect(25, 25, 200, 200);
 
       }
 
