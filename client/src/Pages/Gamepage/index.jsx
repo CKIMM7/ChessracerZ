@@ -81,9 +81,9 @@ function Gamepage() {
                 <main>
                     <Timer />
                     <div id="waiting">{waitMessage}</div>
+                    <img src="/pieces/wK.png" alt="The white king" />
                     <div id="chess-game">
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>
-                        
                     </div> 
                     <div id="race-game">
                         <Game4 lobbyId={lobbyId} color={color}/>
