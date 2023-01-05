@@ -113,7 +113,7 @@ def join_lobby(lobbyId):
 def startTimer(lobbyId):
   socketio.sleep(3)
   print(f"Lobby {lobbyId}: Starting timer")
-  time = 90
+  time = 7
   socketio.emit("start-timer", time ,room=lobbyId)
   socketio.sleep(time)
   print(f"Lobby {lobbyId}: Timer finished")
@@ -137,7 +137,7 @@ def updateGame(lobbyId, source, target):
   socketio.emit("get-moves", moves, room=lobbyId)
 
 @socketio.on('pass-game-race')
-def updateGameRace(lobbyId, x, y, player_lap):
+def updateGameRace(lobbyId, x, y, player_lap, opponent_lap):
   print('updatedGame-Race')
   print(f"----------{player_lap}----------------")
 
@@ -150,7 +150,12 @@ def updateGameRace(lobbyId, x, y, player_lap):
   print(moves)
   if(player_lap):
       moves['player_lap'] = player_lap
-      socketio.emit("get-moves-race", moves, room=lobbyId)
+      socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
+
+  # if(opponent_lap):
+  #     print(opponent_lap)
+  #     moves['opponent_lap'] = opponent_lap
+  #     socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
 
   socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
 

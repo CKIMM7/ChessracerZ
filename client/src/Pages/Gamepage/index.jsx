@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { socket } from "../../socket"
 
 import { Header, Board, Race, Timer } from "../../components"
+import LapCounter from "../../components/lapcounter"
 
 import Game4 from "../../components/Race3"
 
@@ -66,11 +67,13 @@ function Gamepage() {
         if (round === 1 || round % 2 === 1) {
             setDraggable(false)
             document.getElementById("chess-game").style.display = "flex"
-            document.querySelector("canvas").style.display = "none"
+            document.getElementById("race-game").style.display = "none"
+
         } else {
             setDraggable(false)
             document.getElementById("chess-game").style.display = "none"
-            document.querySelector("canvas").style.display = "flex"
+            document.getElementById("race-game").style.display = "flex"
+
         }
 
     }, [round, lobbyId])
@@ -85,6 +88,7 @@ function Gamepage() {
                     <div id="waiting">{waitMessage}</div>
                     <div id="chess-game">
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>
+                        
                     </div> 
                     <div id="race-game">
                         <Game4 lobbyId={lobbyId} color={color}/>

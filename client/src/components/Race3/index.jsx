@@ -27,8 +27,8 @@ export default class Game extends React.Component {
         const config = {
             type: Phaser.AUTO,
             parent: 'race-game',
-            width: 1300,
-            height: 1000,
+            width: 800,
+            height: 600,
             backgroundColor:0x000000,
             scene: sceneMainInstance,
             physics:{
