@@ -10,10 +10,7 @@ from werkzeug import exceptions
 from subprocess import Popen
 import pathlib
 import hellopy
-# import boto3
-
 import os
-# from dotenv import load_dotenv
 
 
 app = Flask(__name__)
@@ -32,7 +29,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
 db = SQLAlchemy(app)
-
 
 
 # Init ma
@@ -84,7 +80,7 @@ def on_disconnect():
 def create_lobby(lobbyId):
     try:
         socketio.server.manager.rooms['/'][lobbyId]
-        socketio.emit("console-message", "Lobby name already taken")
+        socketio.emit("display-message", "Lobby name already taken")
     except:
         join_room(lobbyId)
         socketio.emit("console-message", f"{request.sid} created {lobbyId} succesfully", room=lobbyId)
@@ -94,24 +90,25 @@ def create_lobby(lobbyId):
 
 @socketio.on('join-lobby')
 def join_lobby(lobbyId):
-    lobby = ""
-  
-    try:
-      rooms = socketio.server.manager.rooms   # gets all rooms
-      lobby = rooms['/'][lobbyId]             # gets current lobby from room
-    except:
-      if (not lobby):
-          socketio.emit("console-message", "Lobby doesn't exist")
-      elif (len(lobby) >= 2):
-          socketio.emit("console-message", "Lobby is already full")
-      else:
-          join_room(lobbyId)
-          socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
-          socketio.emit("send-to-game", room=request.sid)
-          socketio.sleep(1)
-          socketio.emit("console-message", f"game starting...", room=lobbyId)
-          socketio.emit("start-game", room=lobbyId)
-          startTimer(lobbyId)
+
+  lobby = ""
+  print(lobbyId)
+  try:
+    rooms = socketio.server.manager.rooms   # gets all rooms
+    lobby = rooms['/'][lobbyId]             # gets current lobby from room
+    print(lobby)
+    if (len(lobby) >= 2):
+      socketio.emit("display-message", "Lobby is already full")
+    else:
+      join_room(lobbyId)
+      socketio.emit("console-message", f"{request.sid} joined {lobbyId} succesfully", room=lobbyId)
+      socketio.emit("send-to-game", room=request.sid)
+      socketio.sleep(1)
+      socketio.emit("console-message", f"game starting...", room=lobbyId)
+      socketio.emit("start-game", room=lobbyId)
+      startTimer(lobbyId)
+  except:
+      socketio.emit("display-message", "Lobby doesn't exist")
 
 def startTimer(lobbyId):
   socketio.sleep(3)
@@ -140,16 +137,24 @@ def updateGame(lobbyId, source, target):
   socketio.emit("get-moves", moves, room=lobbyId)
 
 @socketio.on('pass-game-race')
-def updateGameRace(lobbyId, x, y):
+def updateGameRace(lobbyId, x, y, player_lap):
   print('updatedGame-Race')
+  print(f"----------{player_lap}----------------")
 
   moves = {
           'x': x,
           'y': y
           }
+  #player_lap = player_lap
+
   print(moves)
+  if(player_lap):
+      moves['player_lap'] = player_lap
+      socketio.emit("get-moves-race", moves, room=lobbyId)
 
   socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
+
+
 
 @socketio.on('end-game')
 def endGame(lobbyId):
