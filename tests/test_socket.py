@@ -26,7 +26,7 @@ def test_create_lobby():
     assert socketio.emit.call_args_list[-1][0][1] == 'w'
 
     socketio_test_client.emit("create-lobby", "TestLobby")
-    assert socketio.emit.call_args_list[-1][0][0] == 'console-message'
+    assert socketio.emit.call_args_list[-1][0][0] == 'display-message'
     assert socketio.emit.call_args_list[-1][0][1] == "Lobby name already taken"
 
     socketio_test_client.disconnect()
@@ -37,7 +37,7 @@ def test_join_lobby():
 
     socketio_test_client.emit("join-lobby", "TestJoin")
 
-    assert socketio.emit.call_args_list[0][0][0] == 'console-message'
+    assert socketio.emit.call_args_list[0][0][0] == 'display-message'
     assert "Lobby doesn't exist" in socketio.emit.call_args_list[0][0][1]
 
     socketio_test_client.emit("create-lobby", "TestJoin")
@@ -48,17 +48,17 @@ def test_join_lobby():
     assert socketio.emit.call_args_list[2][0][0] == 'send-to-game'
     assert socketio.emit.call_args_list[2][0][1] == 'w'
 
-    socketio_test_client.emit("join-lobby", "TestJoin") ## line doesn't seem to trigger event
-
+    socketio_test_client.emit("join-lobby", "TestJoin") 
+    
     socketio.sleep(3)
     print(socketio.emit.call_args_list)
 
     assert socketio.emit.call_args_list[3][0][0] == 'console-message'
-    assert "joined TestJoin succesfully" in socketio.emit.call_args_list[2][0][1]
+    assert "joined TestJoin succesfully" in socketio.emit.call_args_list[3][0][1]
 
     assert socketio.emit.call_args_list[4][0][0] == 'send-to-game'
     assert socketio.emit.call_args_list[5][0][0] == 'console-message'
-    assert "game starting..." in socketio.emit.call_args_list[4][0][1]
+    assert "game starting..." in socketio.emit.call_args_list[5][0][1]
     assert socketio.emit.call_args_list[6][0][0] == 'start-game'
 
     socketio_test_client.disconnect()
@@ -72,5 +72,5 @@ def test_start_timer():
 
     assert socketio.emit.call_args_list[0][0][0] == 'start-timer'
     socketio_test_client.disconnect()
-    assert socketio.emit.call_args_list[0][0][1] == 8
+    assert socketio.emit.call_args_list[0][0][1] == 5
     assert socketio.emit.call_args_list[1][0][0] == "timer-end"

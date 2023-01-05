@@ -1,9 +1,16 @@
-div#chess-game {
-    text-align: center;
+main#game-main {
+    background-color: #393E46;
+    overflow: hidden;
+}
+
+body {
+    overflow: hidden;
 }
 
 div#chess-game {
     text-align: center;
+    /* width: 50vw; */
+    /* margin: auto; */
     margin-top: 10px;
 }
 
@@ -24,8 +31,9 @@ div#waiting {
 canvas {
     position: absolute;
     display: block;
-    margin: 0;
-    top: 600px;
+    margin-top: 190px;
+    position: absolute;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }

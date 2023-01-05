@@ -1,7 +1,7 @@
 main {
     height: 100vh;
     text-align: center;
-    background-color: rgb(148, 149, 156);
+    background-color: rgb(49, 49, 53);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,6 +11,14 @@ main {
 main h1 {
     font-size: 8vh;
     color: #3A3939
+}
+
+.white {
+    color: white
+}
+
+.red {
+    color: #b6001e
 }
 
 main img {
@@ -48,7 +56,7 @@ main div#lobbyOptions input {
 }
 
 p#displayMessage {
-    color: darkred;
+    color: white;
     font-weight: 700;
     margin: 0px
 }

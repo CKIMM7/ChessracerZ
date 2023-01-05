@@ -23,8 +23,8 @@ export default class SceneMain extends Phaser.Scene {
 
     preload() {
       this.load.image("tiles","./assets3/tiles.png");
-      this.load.image("face","./assets3/face.png");
-      this.load.image("opponent","./assets3/opponent.png");
+      this.load.image("face","./assets3/greenCar.png");
+      this.load.image("opponent","./assets3/redCar.png");
       this.load.tilemapTiledJSON('map', "./assets3/map1.json");
     }
 
@@ -47,6 +47,11 @@ export default class SceneMain extends Phaser.Scene {
           this.player=this.physics.add.sprite(500,150,"opponent");
           this.opponent=this.physics.add.sprite(500,150,"face");}
         
+        this.player.width=200
+        this.player.scaleY=this.player.scaleX
+
+
+
         Align.scaleToGameW(this.player,0.02,this);
         Align.scaleToGameW(this.opponent,0.02,this);
 
@@ -229,14 +234,15 @@ export default class SceneMain extends Phaser.Scene {
       let r = this.player.rotation;
 
       if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y || r !== this.player.oldPosition.rotation)) {
+        console.log(this.player.oldPosition)
 
-        if(this.player.y < 180 && this.player.y > 140 && this.player.x > 370 && 380 > this.player.x) {
+        if(this.player.y < 180 && this.player.y > 120 && this.player.x > 370 && 380 > this.player.x) {
           this.lineStart = true
           console.log('this.lineStart')
           console.log(this.lineStart)
         }
 
-        if(this.player.y < 180 && this.player.y > 140 && this.player.x > 270 && 280 > this.player.x) {
+        if(this.player.y < 180 && this.player.y > 120 && this.player.x > 270 && 280 > this.player.x) {
           this.lineFinish = true
           console.log('this.lineFinish')
           console.log(this.lineFinish)
