@@ -23,8 +23,8 @@ export default class SceneMain extends Phaser.Scene {
 
     preload() {
       this.load.image("tiles","./assets3/tiles.png");
-      this.load.image("face","./assets3/face.png");
-      this.load.image("opponent","./assets3/opponent.png");
+      this.load.image("face","./assets3/greenCar.png");
+      this.load.image("opponent","./assets3/redCar.png");
       this.load.tilemapTiledJSON('map', "./assets3/map1.json");
     }
 
@@ -47,6 +47,11 @@ export default class SceneMain extends Phaser.Scene {
           this.player=this.physics.add.sprite(500,150,"opponent");
           this.opponent=this.physics.add.sprite(500,150,"face");}
         
+        this.player.width=200
+        this.player.scaleY=this.player.scaleX
+
+
+
         Align.scaleToGameW(this.player,0.02,this);
         Align.scaleToGameW(this.opponent,0.02,this);
 
