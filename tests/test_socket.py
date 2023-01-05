@@ -74,3 +74,11 @@ def test_start_timer():
     socketio_test_client.disconnect()
     assert socketio.emit.call_args_list[0][0][1] == 8
     assert socketio.emit.call_args_list[1][0][0] == "timer-end"
+
+# def test_pass_game():
+#     socketio.emit.reset_mock()
+#     socketio_test_client = socketio.test_client(app, flask_test_client=flask_test_client)
+#     socketio_test_client.emit("pass-game", "TestPassGame")
+#     assert "TestPassGame" in socketio.server.manager.rooms['/']
+
+#     assert socketio.emit.call_args_list[0][0][0] == 'start-timer'

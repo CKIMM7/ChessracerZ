@@ -14,8 +14,6 @@ function Gamepage() {
     const [waitMessage, setWaitMessage] = useState("Waiting on opponent...")
     const [draggable, setDraggable] = useState(false)
     const [round, setRound] = useState(1)
-
-
     const { state } = useLocation()
     const { lobbyId, color } = state
 

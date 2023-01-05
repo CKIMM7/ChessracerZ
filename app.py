@@ -155,7 +155,6 @@ def updateGameRace(lobbyId, x, y, player_lap):
   socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
 
 
-
 @socketio.on('end-game')
 def endGame(lobbyId):
   print('Game has ended')
@@ -168,54 +167,49 @@ def endGame(lobbyId):
   socketio.emit('end-game', room=lobbyId)
 
 
+# @app.route('/user', methods=['POST'])
+# def add_User():
+
+#     access_token = request.json['data']['accessToken']
+#     name = request.json['data']['displayName']
+#     email = request.json['data']['email']
+#     guid = request.json['data']['guid']
+#     photo = request.json['data']['photo']
+
+#     print(request.json['data'])
+
+#     existing_user = User.query.filter_by(guid=guid).first()
+#     if existing_user:
+
+#         print('user alread exists')
+#         print(existing_user)
+
+#         return user_schema.jsonify(existing_user)
+#     else:
+#         new_user = User(access_token, name, email, guid, photo, '', '', '')
+#         print('new user')
+#         print(new_user)
+
+#         db.session.add(new_user)
+#         db.session.commit()
+#         user_schema.jsonify(new_user)
+
+#         return user_schema.jsonify(new_user)
 
 
+# @app.route('/users', methods=['GET'])
+# def get_user():
+#   all_users = User.query.all()
+#   result = users_schema.dump(all_users)
+#   print('get all users')
+#   print(result)
 
-@app.route('/user', methods=['POST'])
-def add_User():
-
-    access_token = request.json['data']['accessToken']
-    name = request.json['data']['displayName']
-    email = request.json['data']['email']
-    guid = request.json['data']['guid']
-    photo = request.json['data']['photo']
-
-    print(request.json['data'])
-
-    existing_user = User.query.filter_by(guid=guid).first()
-    if existing_user:
-
-        print('user alread exists')
-        print(existing_user)
-
-        return user_schema.jsonify(existing_user)
-    else:
-        new_user = User(access_token, name, email, guid, photo, '', '', '')
-        print('new user')
-        print(new_user)
-
-        db.session.add(new_user)
-        db.session.commit()
-        user_schema.jsonify(new_user)
-
-        return user_schema.jsonify(new_user)
-
-
-@app.route('/users', methods=['GET'])
-def get_user():
-  all_users = User.query.all()
-  result = users_schema.dump(all_users)
-  print('get all users')
-  print(result)
-
-  return jsonify(result)
+#   return jsonify(result)
 
 
 @app.route('/', methods=['GET'])
 def home():
 
-    print('request.method')
-    print(request.method)
     pathlib.Path(__file__).parent.resolve()
     return jsonify({'message': 'Hello from Flask!'}), 200
 

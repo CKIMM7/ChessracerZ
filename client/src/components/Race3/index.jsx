@@ -15,7 +15,6 @@ export default class Game extends React.Component {
 
   }
 
-
   static getDerivedStateFromProps(props, state) {
 
     sceneMainInstance = new SceneMain(state)
@@ -44,7 +43,7 @@ export default class Game extends React.Component {
 
     render() {
       return <>
-      <div id="phaser-game" lobbyid={this.state.lobbyId}/>
-      </>;
+                <div role="race" id="phaser-game" lobbyid={this.state.lobbyId}/>
+              </>;
     }
   }
