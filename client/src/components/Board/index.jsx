@@ -140,6 +140,7 @@ const Board = ({ lobbyId, color, draggable }) =>{
     <div className="app">
       <p>{checkMessage}</p>
       <Chessboard 
+      boardWidth={window.innerWidth * 0.35}
       position={game.fen()}
       onPieceDrop ={onDrop}
       boardOrientation={color == 'w' ? 'white' : 'black'}

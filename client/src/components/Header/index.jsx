@@ -2,7 +2,7 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 
 
-// import { GoogleLogin } from "./components"
+import { Timer } from "../../components"
 import "./header.css"
 
 
@@ -18,9 +18,9 @@ function Header() {
   }
 
   return <header>
-            <img src={logo} alt="Logo" />
-            <h1 onClick={goHome}>ChessRacerZ</h1>
-            {/* <GoogleLogin /> */}
+            <img src={logo} alt="Logo" className="left"/>
+            <h1 onClick={goHome} className="center"><span className="white">Chess</span><span className="red">Racer</span></h1>
+            <Timer />
         </header>
 
 }

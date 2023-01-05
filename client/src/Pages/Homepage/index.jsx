@@ -51,7 +51,7 @@ function Homepage() {
     return<>
             <main>
                 <img src={logo} alt="Logo" />
-                <h1>ChessRacerZ</h1>
+                <h1><span className="white">Chess</span><span className="red">Racer</span></h1>
                 <div id="lobbyOptions">
                     <input type="text" placeholder="Enter LobbyId" onChange={updateLobbyId} value={lobbyId} required/>
                     {displayMessage ? <p id="displayMessage">{displayMessage}</p> : null}

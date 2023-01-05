@@ -78,8 +78,7 @@ function Gamepage() {
 
     return<>
                 <Header />
-                <main>
-                    <Timer />
+                <main id="game-main">
                     <div id="waiting">{waitMessage}</div>
                     <div id="chess-game">
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>

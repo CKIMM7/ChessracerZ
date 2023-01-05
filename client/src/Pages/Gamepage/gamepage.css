@@ -1,5 +1,10 @@
-div#chess-game {
-    text-align: center;
+main#game-main {
+    background-color: #393E46;
+    overflow: hidden;
+}
+
+body {
+    overflow: hidden;
 }
 
 div#chess-game {
@@ -25,7 +30,7 @@ div#waiting {
 
 canvas {
     display: block;
-    margin: 0;
+    margin-top: 190px;
     position: absolute;
     top: 50%;
     left: 50%;

@@ -1,6 +1,7 @@
 #chess-game {
     color: red;
     /* transform: rotate(3.142rad); */
+    margin-bottom: 8vh;
 }
 
 #gameEnding {
