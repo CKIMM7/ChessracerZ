@@ -15,11 +15,6 @@ const Board = ({ lobbyId, color, draggable }) =>{
     
     if (!color) color ='b'
 
-    //console.log(game.board())
-    // console.log(game.ascii())
-    console.log('color')
-    console.log(game.turn())
-  
     function safeGameMutate(modify){
 
             setGame((g)=>{

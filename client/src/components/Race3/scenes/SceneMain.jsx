@@ -13,11 +13,27 @@ export default class SceneMain extends Phaser.Scene {
 
         this.lineStart = false
         this.lineFinish = false
+        this.checkPoint = false
         this.lap = false
         this.velocity = 500
 
         this.playerScore = ''
         this.opponentScore = ''
+        this.goingBackWarn = ''
+        this.getWarning = () => { 
+        
+          
+        return this.goingBackWarn = this.add
+        .text(500, 500, `You are going back`, {
+          fill: '#A52A2A',
+          fontSize: '50px',
+          fontStyle: 'bold',
+          color: '#A52A2A',
+          align: 'center',
+        })
+        .setOrigin(0.5)};
+
+
 
     }
 
@@ -26,9 +42,11 @@ export default class SceneMain extends Phaser.Scene {
       this.load.image("face","./assets3/greenCar.png");
       this.load.image("opponent","./assets3/redCar.png");
       this.load.tilemapTiledJSON('map', "./assets3/map1.json");
+
+      this.load.audio("car","./assets3/carSound.wav");
     }
 
-    create() {    
+    create() {  
       
         let self = this; 
 
@@ -40,17 +58,13 @@ export default class SceneMain extends Phaser.Scene {
         this.tileset = tileset;
 
         if(this.props.color) {
-          this.player=this.physics.add.sprite(500,150,"face");
-          this.opponent=this.physics.add.sprite(500,150,"opponent");}
+          this.player=this.physics.add.sprite(500,200,"face");
+          this.opponent=this.physics.add.sprite(500,180,"opponent");}
 
         if(!this.props.color) {
-          this.player=this.physics.add.sprite(500,150,"opponent");
-          this.opponent=this.physics.add.sprite(500,150,"face");}
-        
-        this.player.width=200
-        this.player.scaleY=this.player.scaleX
-
-
+          this.player=this.physics.add.sprite(500,180,"opponent");
+          this.opponent=this.physics.add.sprite(500,200,"face");}
+      
 
         Align.scaleToGameW(this.player,0.02,this);
         Align.scaleToGameW(this.opponent,0.02,this);
@@ -77,9 +91,9 @@ export default class SceneMain extends Phaser.Scene {
         this.player.lap = 0
         this.opponent.lap = 0
 
-        //globals
-        console.log(tileset)
-        console.log(this)
+        //sound
+        this.carSound = this.sound.add('car');
+        this.carSound.volume = 0.5; 
 
         this.socket.on("get-moves-race", function(moves) {
 
@@ -145,10 +159,10 @@ export default class SceneMain extends Phaser.Scene {
           }, 1000)          
 
           self.opponent.x = 500;
-          self.opponent.y = 150;
+          self.opponent.y = 180;
 
           self.player.x = 500;
-          self.player.y = 150;
+          self.player.y = 200;
 
           self.opponent.lap = 0;
           self.player.lap = 0;
@@ -174,12 +188,6 @@ export default class SceneMain extends Phaser.Scene {
           .setOrigin(0.5);
 
         })
-
-        this.popup = this.add.graphics();
-        this.popup.lineStyle(1, 0x2a275c);
-        this.popup.fillStyle(0x7c8d99, 0.5);
-        this.popup.strokeRect(25, 25, 200, 200);
-        this.popup.fillRect(25, 25, 200, 200);
     
         this.playerScore = this.add
         .text(100, 60, `player: ${self.player.lap}`, {
@@ -199,6 +207,11 @@ export default class SceneMain extends Phaser.Scene {
         })
         .setOrigin(0.5);
 
+        this.popup = this.add.graphics();
+        this.popup.lineStyle(1, 0x2a275c);
+        this.popup.fillStyle(0x7c8d99, 0.5);
+        this.popup.strokeRect(25, 25, 200, 150);
+        this.popup.fillRect(25, 25, 200, 150);
 
       }
 
@@ -208,24 +221,25 @@ export default class SceneMain extends Phaser.Scene {
        if (this.cursors.up.isDown==true)
        {
         this.player.setVelocityY(-this.velocity);
+        this.carSound.play()
 
        }
        if (this.cursors.down.isDown==true)
        {
          this.player.setVelocityY(this.velocity);
-
+         this.carSound.play()
 
        }
         if (this.cursors.right.isDown==true)
        {
          this.player.setVelocityX(this.velocity);
-
+         this.carSound.play()
 
        }
        if (this.cursors.left.isDown==true)
        {
          this.player.setVelocityX(-this.velocity);
-
+         this.carSound.play()
        }
 
       // emit player movement
@@ -235,22 +249,67 @@ export default class SceneMain extends Phaser.Scene {
 
       if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y || r !== this.player.oldPosition.rotation)) {
 
-        if(this.player.y < 180 && this.player.y > 140 && this.player.x > 370 && 380 > this.player.x) {
+      //console.log(this.player.oldPosition)
+
+        if(this.goingBackWarn) this.goingBackWarn.destroy()
+
+        if(this.player.oldPosition.x < this.player.x && this.player.y < 260 && this.player.y > 120) {
+          // console.log('user is going backwards1')
+          // console.log('old position')
+          // console.log(this.player.oldPosition.x)
+          // console.log(this.player.x)
+
+          this.player.setVelocityX(-100);
+          //this.player.setVelocityY(100);
+
+          if(!this.goingkBacWarn) this.getWarning()
+
+  
+          } else if (this.player.oldPosition.x > this.player.x && this.player.y < 827 && this.player.y > 708) {
+            //
+            this.player.setVelocityX(-200);
+            if(!this.goingkBacWarn) this.getWarning()
+            console.log('user is going backwards2')
+
+          } else if (this.player.oldPosition.y > this.player.y && this.player.x < 185 && this.player.x > 138) {
+            this.player.setVelocityY(-200);
+            if(!this.goingkBacWarn) this.getWarning()
+            console.log('user is going backwards')
+
+          } else if(this.player.oldPosition.y < this.player.y && this.player.x < 1013 && this.player.x > 906) {
+            this.player.setVelocityY(-200);
+            if(!this.goingkBacWarn) this.getWarning()
+            console.log('user is going backwards')
+          }
+
+
+        if(this.player.y < 573 && this.player.y > 565 && this.player.x > 900 && 1015 > this.player.x) {
+          this.checkpoint = true
+          console.log('this.checkpoint')
+        }
+        
+
+        if(this.player.y < 190 && this.player.y > 120 && this.player.x > 370 && 380 > this.player.x && this.player.oldPosition.x > this.player.x) {
+
+
           this.lineStart = true
           console.log('this.lineStart')
           console.log(this.lineStart)
+
+
         }
 
-        if(this.player.y < 180 && this.player.y > 140 && this.player.x > 270 && 280 > this.player.x) {
+        if(this.player.y < 190 && this.player.y > 120 && this.player.x > 270 && 280 > this.player.x && this.player.oldPosition.x > this.player.x) {
           this.lineFinish = true
           console.log('this.lineFinish')
           console.log(this.lineFinish)
         }
 
-        if(this.lineStart && this.lineFinish) {
+        if(this.lineStart && this.lineFinish && this.checkpoint) {
           this.player.lap += 1
           this.lineStart= false
           this.lineFinish= false
+          this.checkpoint = false
           console.log('player complete lap')
           console.log(this.player.lap)
 

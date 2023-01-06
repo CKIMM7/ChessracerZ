@@ -29,6 +29,7 @@ div#waiting {
 }
 
 canvas {
+    position: absolute;
     display: block;
     margin-top: 190px;
     position: absolute;

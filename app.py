@@ -65,7 +65,7 @@ def join_lobby(lobbyId):
 def startTimer(lobbyId):
   socketio.sleep(3)
   print(f"Lobby {lobbyId}: Starting timer")
-  time = 5
+  time = 10
   socketio.emit("start-timer", time ,room=lobbyId)
   socketio.sleep(time)
   print(f"Lobby {lobbyId}: Timer finished")
@@ -97,20 +97,13 @@ def updateGameRace(lobbyId, x, y, player_lap, opponent_lap):
           'x': x,
           'y': y
           }
-  #player_lap = player_lap
 
   print(moves)
   if(player_lap):
       moves['player_lap'] = player_lap
       socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
 
-  # if(opponent_lap):
-  #     print(opponent_lap)
-  #     moves['opponent_lap'] = opponent_lap
-  #     socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
-
   socketio.emit("get-moves-race", moves, room=lobbyId, include_self=False)
-
 
 
 @socketio.on('end-game')
