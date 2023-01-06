@@ -1,17 +1,23 @@
-#
-readme here
-deploy your app on aws infrastructure without a hastle.
+# ChessRacer
+### Cameron Findlay, Adedayo Titiloye, Young Kim
+  
+Inspired by Chessboxing, ChessRacer is a game that tests your mind on the chessboard and your speed on the racetrack!
+ 
+This project was created in one week as our final project in our futureproof 12-week training course.
 
-this should be deployed on a public ip address as a standalone server
-to talks to clients.
+[Play ChessRacer now!](https://chessracerz.netlify.app)
 
-this is the backend.
-front end should be deployed seperately.
+## Installation & Usage
+### Installation
+- Clone or download the repo
+- in the root folder run `pipenv install`
+- in the client folder run `npm i`
 
-aws endpoints <---> this server/backend  <---> client(react/firebase)
-
-workflow
-
-0. login with firebase or flask -> save token to backend/alchemy
-1. user creates a IAM user from frontend -> access to ec2 resouces ✓
-2. create ec2 instace put it on a public ip address -> is where client will deploy to
+### Usage
+- Start the backend server from the root by running `pipenv run dev`
+- Start the client server from the client folder by running `npm run start`
+ 
+## Bugs
+- Sound
+- Race doesn't test direction for new laps
+- Game needs balanced
