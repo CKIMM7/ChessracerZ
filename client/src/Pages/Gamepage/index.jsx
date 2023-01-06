@@ -80,7 +80,7 @@ function Gamepage() {
                 <Header />
                 <main id="game-main">
                     <div id="waiting">{waitMessage}</div>
-                    <img src="/pieces/wK.png" alt="The white king" />
+                    {/* <img src="/pieces/wK.png" alt="The white king" /> */}
                     <div id="chess-game">
                         <Board lobbyId={lobbyId} color={color} draggable={draggable}/>
                     </div> 
