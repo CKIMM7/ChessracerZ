@@ -6,7 +6,9 @@ Inspired by Chessboxing, ChessRacer is a game that tests your mind on the chessb
 This project was created in one week as our final project in our futureproof 12-week training course.
 
 [Play ChessRacer now!](https://chessracerz.netlify.app)
-
+ 
+[Watch the demo!](https://youtu.be/fVu6Hs3nLGg)
+  
 ## Installation & Usage
 ### Installation
 - Clone or download the repo
